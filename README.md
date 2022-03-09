@@ -47,7 +47,7 @@ An air parcel with relative humidify of 75% and temperature of 25°C rises from 
 
 Solution:
 ```ts
-import * as velitherm from '..';
+import * as velitherm from 'velitherm';
 
 // As the air rises, its specific humidity remains constant.
 const q = velitherm.specificHumidity(75, 1017, 25);

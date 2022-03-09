@@ -140,7 +140,7 @@ export function pressureFromStandardAltitude(height: number, pressure0: number =
  *
  * @param {number} pressure Pressure
  * @param {number} [pressure0] Optional sea-level pressure of the day
- * @param {number} [temp] Optional temperature, T0 otherwise
+ * @param {number} [temp] Optional temperature
  * @returns {number}
  */
 export function altitudeFromPressure(pressure: number, pressure0: number, temp: number = T0): number {
@@ -153,7 +153,7 @@ export function altitudeFromPressure(pressure: number, pressure0: number, temp: 
  *
  * @param {number} height Height
  * @param {number} [pressure0] Optional sea-level pressure of the day
- * @param {number} [temp] Optional temperature, T0 otherwise
+ * @param {number} [temp] Optional temperature
  * @returns {number}
  */
 export function pressureFromAltitude(height: number, pressure0: number = P0, temp: number = T0): number {
