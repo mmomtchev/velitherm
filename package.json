@@ -6,7 +6,7 @@
   "module": "./dist/es/index.js",
   "types": "./dist/es/index.d.ts",
   "scripts": {
-    "test": "test",
+    "test": "mocha",
     "build": "tsc -p tsconfig.cjs.json && tsc -p tsconfig.es.json",
     "doc": "documentation readme --section=API --parse-extension ts index.ts"
   },
