@@ -43,14 +43,14 @@ assert(velitherm.altitudeFromPressure(898.746) === 1000);
 
 # Example
 
-An air parcel with relative humidify of 80% and temperature of 25°C rises from 0m AMSL to 500m AMSL where the surrounding temperature is 22°C. What is its new relative humidity? Has there been condensation and did it form a cloud? The pressure of the day is 1017hPa.
+An air parcel with relative humidify of 75% and temperature of 25°C rises from 0m AMSL to 500m AMSL where the surrounding temperature is 20°C. What is its new relative humidity? What is its new temperature? Has there been condensation and did it form a cloud? Has the ceiling being reached or will the air parcel continue to rise? The pressure of the day is 1017hPa.
 
 Solution:
 ```ts
 import * as velitherm from '..';
 
 // As the air rises, its specific humidity remains constant.
-const q = velitherm.specificHumidity(80, 1017, 25);
+const q = velitherm.specificHumidity(75, 1017, 25);
 console.log('Specific humidity = ', Math.round(q), 'g/kg');
 
 // Find the current pressure at 500m AMSL
@@ -58,8 +58,12 @@ const P1 = velitherm.pressureFromAltitude(500, 1017, 25);
 console.log('Pressure at 500m = ', Math.round(P1), 'hPa');
 
 // Compute the new relative humidity of the air parcel at this pressure
-const w1 = velitherm.relativeHumidity(q, P1, 22);
+const w1 = velitherm.relativeHumidity(q, P1, 20);
 console.log('Relative humidity after rising to 500m = ', Math.round(w1), '%');
+
+// Take into account the adiabatic cooling
+const T1 = 25 - 500 * velitherm.gamma;
+console.log('The new temperature of the air parcel at 500m = ', T1, '°C');
 
 // If the air parcel has reached 100% humidity, there is condensation
 if (w1 < 100) {
@@ -67,6 +71,15 @@ if (w1 < 100) {
 } else {
   console.log('Yes, it did form a cloud');
 }
+
+// If the air parcel is still warmer than the surrounding air,
+// it will continue to rise
+if (T1 < 20) {
+  console.log('The ceiling has been reached');
+} else {
+  console.log('The air parcel will continue to rise');
+}
+
 ```
 
 # API
