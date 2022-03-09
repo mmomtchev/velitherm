@@ -107,8 +107,13 @@ describe('velitherm', () => {
 
     describe('mixingRatio', () => {
       for (const lvl of humidity) {
-        it(`RH=${lvl.h}%, P=${lvl.p}hPa, T=${lvl.t}°C => q=${lvl.w}g/kg`, () => {
+        it(`RH=${lvl.h}%, P=${lvl.p}hPa, T=${lvl.t}°C => w=${lvl.w}g/kg`, () => {
           assert.closeTo(velitherm.mixingRatio(velitherm.specificHumidity(lvl.h, lvl.p, lvl.t)), lvl.w, 1e-1);
+        });
+      }
+      for (const lvl of humidity) {
+        it(`RH=${lvl.h}%, P=${lvl.p}hPa, T=${lvl.t}°C => q=${lvl.q}g/kg`, () => {
+          assert.closeTo(velitherm.specificHumidityFromMixingRatio(lvl.w), lvl.q, 1e-1);
         });
       }
     });

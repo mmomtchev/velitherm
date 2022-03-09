@@ -19,9 +19,9 @@
  *
  * Specific humidity in g/kg
  *
- * Mixing ration in g/kg
+ * Mixing ratio in g/kg
  */
-export const velitherm = '1.0.0';
+export const velitherm = 'velitherm';
 
 /**
  * Earth's average gravity acceleration (m/s2)
@@ -112,7 +112,10 @@ export const Mv = 0.018016;
 export const R = 8.31446;
 
 /**
- * Altitude from pressure using the barometric formula and ICAO's definition of standard atmosphere
+ * Altitude from pressure using the barometric formula and ICAO's definition of standard atmosphere.
+ *
+ * This is a very rough approximation that is an ICAO standard. It is used when calculating QNH.
+ * It does not take into account the pressure and temperature of the day.
  *
  * @param {number} pressure Pressure
  * @param {number} [pressure0] Optional sea-level pressure of the day
@@ -124,7 +127,10 @@ export function altitudeFromStandardPressure(pressure: number, pressure0: number
 }
 
 /**
- * Pressure from altitude using the barometric formula and ICAO's definition of standard atmosphere
+ * Pressure from altitude using the barometric formula and ICAO's definition of standard atmosphere.
+ *
+ * This is a very rough approximation that is an ICAO standard. It is used when calculating QNH.
+ * It does not take into account the pressure and temperature of the day.
  *
  * @param {number} height Height
  * @param {number} [pressure0] Optional sea-level pressure of the day
@@ -136,7 +142,11 @@ export function pressureFromStandardAltitude(height: number, pressure0: number =
 }
 
 /**
- * Altitude from pressure using the hypsometric formula
+ * Altitude from pressure using the hypsometric formula.
+ *
+ * This is a better equation that takes into account the pressure and the temperature of the day.
+ * It is not a standard and different weather institutions use slightly different parameters.
+ * It is used when calculating the QFF.
  *
  * @param {number} pressure Pressure
  * @param {number} [pressure0] Optional sea-level pressure of the day
@@ -149,7 +159,11 @@ export function altitudeFromPressure(pressure: number, pressure0: number, temp: 
 }
 
 /**
- * Pressure from altitude using the hypsometric formula
+ * Pressure from altitude using the hypsometric formula.
+ *
+ * This is a better equation that takes into account the pressure and the temperature of the day.
+ * It is not a standard and different weather institutions use slightly different parameters.
+ * It is used when calculating the QFF.
  *
  * @param {number} height Height
  * @param {number} [pressure0] Optional sea-level pressure of the day
@@ -195,6 +209,15 @@ export function relativeHumidity(specificHumidity: number, pressure: number = P0
  * @returns {number}
  */
 export const mixingRatio = (specificHumidity: number) => specificHumidity / (1 - specificHumidity / 1000);
+
+/**
+ * Mixing ratio
+ *
+ * @param {number} mixingRatio Mixing ratio
+ * @returns {number}
+ */
+export const specificHumidityFromMixingRatio = (mixingRatio: number) => mixingRatio / (1 + mixingRatio / 1000);
+
 
 /**
  * Specific humidity

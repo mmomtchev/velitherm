@@ -13,9 +13,7 @@ Zero-dependency!
 
 # Installation
 
-```
-npm install --save velitherm
-```
+    npm install --save velitherm
 
 # Usage
 
@@ -48,8 +46,9 @@ assert(velitherm.altitudeFromPressure(898.746) === 1000);
 ## Barometric and hypsometric equations
 
 There is no single analytical equation that can be used to give a precise value for the altitude / pressure relationship. In fact, this relationship depends on the full vertical temperature and humidity profile and it is impossible to reduce to a single formula. There are two levels of approximation that are widely used:
-* The barometric formula, which is an ICAO standard and gives a rough value that does not take into account the pressure or the temperature of the day and it is always constant - in aviation it is referred by the callsign **QNH**
-* The hypsometric formula, which is commonly used in weather science and it is a better estimation that takes into account the pressure and the temperature of the day - so it varies from one day to another - in aviation it is referred by the callsign **QFF**
+
+*   The barometric formula, which is an ICAO standard and gives a rough value that does not take into account the pressure or the temperature of the day and it is always constant - in aviation it is referred by the callsign **QNH**
+*   The hypsometric formula, which is commonly used in weather science and it is a better estimation that takes into account the pressure and the temperature of the day - so it varies from one day to another - in aviation it is referred by the callsign **QFF**
 
 # Example
 
@@ -122,10 +121,12 @@ if (T1 < 20) {
     *   [Parameters](#parameters-5)
 *   [mixingRatio](#mixingratio)
     *   [Parameters](#parameters-6)
-*   [specificHumidity](#specifichumidity)
+*   [specificHumidityFromMixingRatio](#specifichumidityfrommixingratio)
     *   [Parameters](#parameters-7)
-*   [airDensity](#airdensity)
+*   [specificHumidity](#specifichumidity)
     *   [Parameters](#parameters-8)
+*   [airDensity](#airdensity)
+    *   [Parameters](#parameters-9)
 
 ## velitherm
 
@@ -149,7 +150,7 @@ Relative humidity in % from 0 to 100
 
 Specific humidity in g/kg
 
-Mixing ration in g/kg
+Mixing ratio in g/kg
 
 Type: [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)
 
@@ -221,7 +222,10 @@ Type: [number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Globa
 
 ## altitudeFromStandardPressure
 
-Altitude from pressure using the barometric formula and ICAO's definition of standard atmosphere
+Altitude from pressure using the barometric formula and ICAO's definition of standard atmosphere.
+
+This is a very rough approximation that is an ICAO standard. It is used when calculating QNH.
+It does not take into account the pressure and temperature of the day.
 
 ### Parameters
 
@@ -232,7 +236,10 @@ Returns **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/G
 
 ## pressureFromStandardAltitude
 
-Pressure from altitude using the barometric formula and ICAO's definition of standard atmosphere
+Pressure from altitude using the barometric formula and ICAO's definition of standard atmosphere.
+
+This is a very rough approximation that is an ICAO standard. It is used when calculating QNH.
+It does not take into account the pressure and temperature of the day.
 
 ### Parameters
 
@@ -243,7 +250,11 @@ Returns **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/G
 
 ## altitudeFromPressure
 
-Altitude from pressure using the hypsometric formula
+Altitude from pressure using the hypsometric formula.
+
+This is a better equation that takes into account the pressure and the temperature of the day.
+It is not a standard and different weather institutions use slightly different parameters.
+It is used when calculating the QFF.
 
 ### Parameters
 
@@ -255,7 +266,11 @@ Returns **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/G
 
 ## pressureFromAltitude
 
-Pressure from altitude using the hypsometric formula
+Pressure from altitude using the hypsometric formula.
+
+This is a better equation that takes into account the pressure and the temperature of the day.
+It is not a standard and different weather institutions use slightly different parameters.
+It is used when calculating the QFF.
 
 ### Parameters
 
@@ -294,6 +309,16 @@ Mixing ratio
 ### Parameters
 
 *   `specificHumidity` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** Specific humidity
+
+Returns **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** 
+
+## specificHumidityFromMixingRatio
+
+Mixing ratio
+
+### Parameters
+
+*   `mixingRatio` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** Mixing ratio
 
 Returns **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** 
 
