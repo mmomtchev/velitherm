@@ -177,19 +177,23 @@ export function pressureFromAltitude(height: number, pressure0: number = P0, tem
 }
 
 /**
- * (Saturation) Water vapor pressure
+ * (Saturation) Water vapor pressure.
+ *
+ * Clausius–Clapeyron equation - the most fundamental equation in weather science.
+ *
+ * This is the Magnus-Tetens approximation.
  *
  * @param {number} temp Temperature
  * @returns {number}
  */
 export function waterVaporSaturationPressure(temp: number = T0): number {
   temp = temp ?? T0;
-  // Tetens equation
+
   return 6.1078 * Math.exp(17.27 * temp / (temp + 237.3));
 }
 
 /**
- * Relative humidity
+ * Relative humidity from specific humidity.
  *
  * @param {number} specificHumidity Specific humidity
  * @param {number} [pressure] Optional pressure
@@ -203,7 +207,7 @@ export function relativeHumidity(specificHumidity: number, pressure: number = P0
 }
 
 /**
- * Dew point.
+ * Dew point from relative humidity.
  *
  * Approximation of the Magnus equation with the Sonntag 1990 coefficients.
  *
@@ -223,7 +227,27 @@ export function dewPoint(relativeHumidity: number, temp: number = T0): number {
 }
 
 /**
- * Mixing ratio
+ * Relative humidity from dew point.
+ *
+ * Approximation of the Magnus equation with the Sonntag 1990 coefficients.
+ *
+ * @param {number} dewPoint Relative humidity
+ * @param {number} [temp] Optional temperature
+ * @returns {number}
+ */
+export function relativeHumidityFromDewPoint(dewPoint: number, temp: number = T0): number {
+  temp = temp ?? T0;
+
+  const b = 17.62;
+  const c = 243.12;
+
+  const gamma = dewPoint * b / (dewPoint + c);
+
+  return Math.exp(gamma - b * temp / (c + temp)) * 100;
+}
+
+/**
+ * Mixing ratio from specific humidity.
  *
  * @param {number} specificHumidity Specific humidity
  * @returns {number}
@@ -231,7 +255,7 @@ export function dewPoint(relativeHumidity: number, temp: number = T0): number {
 export const mixingRatio = (specificHumidity: number) => specificHumidity / (1 - specificHumidity / 1000);
 
 /**
- * Mixing ratio
+ * Specific humidity from mixing ratio.
  *
  * @param {number} mixingRatio Mixing ratio
  * @returns {number}
@@ -239,7 +263,7 @@ export const mixingRatio = (specificHumidity: number) => specificHumidity / (1 -
 export const specificHumidityFromMixingRatio = (mixingRatio: number) => mixingRatio / (1 + mixingRatio / 1000);
 
 /**
- * Specific humidity
+ * Specific humidity from relative humidity.
  *
  * @param {number} relativeHumidity Relative humidity
  * @param {number} [pressure] Optional pressure

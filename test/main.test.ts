@@ -133,6 +133,14 @@ describe('velitherm', () => {
         });
       }
     });
+
+    describe('relativeHumidityFromDewPoint', () => {
+      for (const lvl of humidity) {
+        it(`Td=${lvl.td}°C, T=${lvl.t}°C => RH=${lvl.h}%`, () => {
+          assert.closeTo(velitherm.relativeHumidityFromDewPoint(lvl.td, lvl.t), lvl.h, 1);
+        });
+      }
+    });
   });
 
   describe('airDensity', () => {

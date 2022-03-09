@@ -2,6 +2,7 @@
 
 ## [1.1.0] WIP
  - Add `specificHumidityFromMixingRatio`
+ - Add `relativeHumidityFromDewPoint`
  - Add an example
  - Documentation improvements
 
