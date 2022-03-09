@@ -302,7 +302,7 @@ export function airDensity(relativeHumidity: number, pressure: number = P0, temp
  *
  * It corresponds to the cloud base level when the clouds are formed by mechanical lifting.
  *
- * This the Espy equation with the Stull coefficient.
+ * This is the Espy equation with the Stull coefficient.
  *
  * @param {number} temp Temperature at 2m
  * @param {number} dewPoint Dew point at 2m

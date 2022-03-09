@@ -1,6 +1,6 @@
 import * as velitherm from '..';
 
-// As the air rises, its specific humidity remains constant.
+// When the air rises, its specific humidity remains constant
 const q = velitherm.specificHumidity(75, 1017, 25);
 console.log('Specific humidity = ', Math.round(q), 'g/kg');
 
@@ -16,7 +16,7 @@ console.log('The new temperature of the air parcel at 500m = ', T1, '°C');
 const w1 = velitherm.relativeHumidity(q, P1, T1);
 console.log('Relative humidity after rising to 500m = ', Math.round(w1), '%');
 
-// If the air parcel has reached 100% humidity, there is condensation
+// If the air parcel has reached 100% humidity, then there is condensation
 if (w1 < 100) {
   console.log('No, it did not form a cloud');
 } else {

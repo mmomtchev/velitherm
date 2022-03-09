@@ -59,7 +59,7 @@ Solution:
 ```ts
 import * as velitherm from 'velitherm';
 
-// As the air rises, its specific humidity remains constant.
+// When the air rises, its specific humidity remains constant
 const q = velitherm.specificHumidity(75, 1017, 25);
 console.log('Specific humidity = ', Math.round(q), 'g/kg');
 
