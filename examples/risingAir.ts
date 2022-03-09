@@ -8,13 +8,13 @@ console.log('Specific humidity = ', Math.round(q), 'g/kg');
 const P1 = velitherm.pressureFromAltitude(500, 1017, 25);
 console.log('Pressure at 500m = ', Math.round(P1), 'hPa');
 
-// Compute the new relative humidity of the air parcel at this pressure
-const w1 = velitherm.relativeHumidity(q, P1, 20);
-console.log('Relative humidity after rising to 500m = ', Math.round(w1), '%');
-
 // Take into account the adiabatic cooling
 const T1 = 25 - 500 * velitherm.gamma;
 console.log('The new temperature of the air parcel at 500m = ', T1, '°C');
+
+// Compute the new relative humidity of the air parcel at this pressure and temperature
+const w1 = velitherm.relativeHumidity(q, P1, T1);
+console.log('Relative humidity after rising to 500m = ', Math.round(w1), '%');
 
 // If the air parcel has reached 100% humidity, there is condensation
 if (w1 < 100) {
