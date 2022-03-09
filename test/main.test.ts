@@ -1,4 +1,4 @@
-import * as velitherm from '..';
+import * as velitherm from '../src';
 
 import * as chai from 'chai';
 import * as mocha from 'mocha';
