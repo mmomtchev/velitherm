@@ -119,14 +119,16 @@ if (T1 < 20) {
     *   [Parameters](#parameters-4)
 *   [relativeHumidity](#relativehumidity)
     *   [Parameters](#parameters-5)
-*   [mixingRatio](#mixingratio)
+*   [dewPoint](#dewpoint)
     *   [Parameters](#parameters-6)
-*   [specificHumidityFromMixingRatio](#specifichumidityfrommixingratio)
+*   [mixingRatio](#mixingratio)
     *   [Parameters](#parameters-7)
-*   [specificHumidity](#specifichumidity)
+*   [specificHumidityFromMixingRatio](#specifichumidityfrommixingratio)
     *   [Parameters](#parameters-8)
-*   [airDensity](#airdensity)
+*   [specificHumidity](#specifichumidity)
     *   [Parameters](#parameters-9)
+*   [airDensity](#airdensity)
+    *   [Parameters](#parameters-10)
 
 ## velitherm
 
@@ -302,6 +304,19 @@ Relative humidity
 
 Returns **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** 
 
+## dewPoint
+
+Dew point.
+
+Approximation of the Magnus equation with the Sonntag 1990 coefficients.
+
+### Parameters
+
+*   `relativeHumidity` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** Relative humidity
+*   `temp` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)?** Optional temperature (optional, default `T0`)
+
+Returns **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** 
+
 ## mixingRatio
 
 Mixing ratio
@@ -336,7 +351,7 @@ Returns **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/G
 
 ## airDensity
 
-Air density
+Air density.
 
 ### Parameters
 

@@ -203,6 +203,26 @@ export function relativeHumidity(specificHumidity: number, pressure: number = P0
 }
 
 /**
+ * Dew point.
+ *
+ * Approximation of the Magnus equation with the Sonntag 1990 coefficients.
+ *
+ * @param {number} relativeHumidity Relative humidity
+ * @param {number} [temp] Optional temperature
+ * @returns {number}
+ */
+export function dewPoint(relativeHumidity: number, temp: number = T0): number {
+  temp = temp ?? T0;
+
+  const b = 17.62;
+  const c = 243.12;
+
+  const gamma = Math.log(relativeHumidity / 100) + b * temp / (c + temp);
+
+  return c * gamma / (b - gamma);
+}
+
+/**
  * Mixing ratio
  *
  * @param {number} specificHumidity Specific humidity
@@ -217,7 +237,6 @@ export const mixingRatio = (specificHumidity: number) => specificHumidity / (1 -
  * @returns {number}
  */
 export const specificHumidityFromMixingRatio = (mixingRatio: number) => mixingRatio / (1 + mixingRatio / 1000);
-
 
 /**
  * Specific humidity
@@ -234,7 +253,7 @@ export function specificHumidity(relativeHumidity: number, pressure: number = P0
 }
 
 /**
- * Air density
+ * Air density.
  *
  * @param {number} relativeHumidity Relative humidity
  * @param {number} [pressure] Optional pressure

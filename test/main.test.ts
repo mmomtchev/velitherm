@@ -29,9 +29,9 @@ const waterVaporSaturationPressure = [
 ];
 
 const humidity = [
-  { t: 23, p: 1013.25, h: 35, q: 6.06, w: 6.09 },
-  { t: 3, p: 900, h: 60, q: 3.15, w: 3.16 },
-  { t: -5, p: 800, h: 90, q: 2.95, w: 2.96 }
+  { t: 23, p: 1013.25, h: 35, q: 6.06, w: 6.09, td: 6.7 },
+  { t: 3, p: 900, h: 60, q: 3.15, w: 3.16, td: -4.0 },
+  { t: -5, p: 800, h: 90, q: 2.95, w: 2.96, td: -6.4 }
 ];
 
 const dryAir = [
@@ -122,6 +122,14 @@ describe('velitherm', () => {
       for (const lvl of humidity) {
         it(`q=${lvl.q}g/kg, P=${lvl.p}hPa, T=${lvl.t}°C => RH=${lvl.h}%`, () => {
           assert.closeTo(velitherm.relativeHumidity(lvl.q, lvl.p, lvl.t), lvl.h, 2);
+        });
+      }
+    });
+
+    describe('dewPoint', () => {
+      for (const lvl of humidity) {
+        it(`RH=${lvl.h}%, T=${lvl.t}°C => Td=${lvl.td}°C`, () => {
+          assert.closeTo(velitherm.dewPoint(lvl.h, lvl.t), lvl.td, 0.1);
         });
       }
     });
