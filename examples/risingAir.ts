@@ -13,7 +13,7 @@ const T1 = 25 - 500 * velitherm.gamma;
 console.log('The new temperature of the air parcel at 500m = ', T1, '°C');
 
 // Compute the new relative humidity of the air parcel at this pressure and temperature
-const w1 = velitherm.relativeHumidity(q, P1, T1);
+const w1 = velitherm.relativeHumidity(q, P1, (T1 - 25) / 2);
 console.log('Relative humidity after rising to 500m = ', Math.round(w1), '%');
 
 // If the air parcel has reached 100% humidity, then there is condensation
