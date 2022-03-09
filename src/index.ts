@@ -24,79 +24,90 @@
 export const velitherm = '1.0.0';
 
 /**
+ * Earth's average gravity acceleration (m/s2)
+ *
  * @const
  * @type {number}
- * Earth's average gravity acceleration (m/s2)
  */
 export const G = 9.81;
 
 /**
+ * The thermal capacity of air (J/kg)
+ *
  * @const
  * @type {number}
- * The thermal capacity of air (J/kg)
  */
 export const Cp = 1005;
 
 /**
+ * The enthalpy of vaporization of water (J/kg)
+ *
  * @const
  * @type {number}
- * The enthalpy of vaporization of water (J/kg)
  */
 export const L = 2500 * 10e6;
 
 /**
+ * The adiabatic lapse rate of dry air (°C/m)
+ *
  * @const
  * @type {number}
- * The adiabatic lapse rate of dry air (°C/m)
  */
 export const gamma = 0.00976;
 
 /**
+ * The average sea level pressure (hPa)
+ *
  * @const
  * @type {number}
- * The average sea level pressure (hPa)
  */
 export const P0 = 1013.25;
 
 /**
+ * The temperature of the ICAO standard atmosphere (°C)
+ *
  * @const
  * @type {number}
- * The temperature of the ICAO standard atmosphere (°C)
  */
 export const T0 = 15;
 
 /**
+ * The specific gas constant of dry air J/(kg*K)
+ *
  * @const
  * @type {number}
- * The specific gas constant of dry air J/(kg*K)
  */
 export const Rd = 287.058;
 
 /**
+ * The specific gas constant of water vapor J/(kg*K)
+ *
  * @const
  * @type {number}
- * The specific gas constant of water vapor J/(kg*K)
  */
 export const Rv = 461.495;
 
 /**
+ * Molar mass of dry air kg/mol
+ *
  * @const
  * @type {number}
- * Molar mass of dry air kg/mol
  */
 export const Md = 0.0289652;
 
 /**
+ * Molar mass of water vapor kg/mol
+ *
  * @const
  * @type {number}
- * Molar mass of water vapor kg/mol
  */
 export const Mv = 0.018016;
 
 /**
+ * Universal gas constant J/(kg*mol)
+ *
  * @const
  * @type {number}
- * Universal gas constant J/(kg*mol)
  */
 export const R = 8.31446;
 
@@ -104,7 +115,7 @@ export const R = 8.31446;
  * Altitude from pressure using the barometric formula and ICAO's definition of standard atmosphere
  *
  * @param {number} pressure Pressure
- * @param {number} [pressure0] Optional sea-level pressure of the day, P0 otherwise
+ * @param {number} [pressure0] Optional sea-level pressure of the day
  * @returns {number}
  */
 export function altitudeFromStandardPressure(pressure: number, pressure0: number = P0): number {
@@ -116,7 +127,7 @@ export function altitudeFromStandardPressure(pressure: number, pressure0: number
  * Pressure from altitude using the barometric formula and ICAO's definition of standard atmosphere
  *
  * @param {number} height Height
- * @param {number} [pressure0] Optional sea-level pressure of the day, P0 otherwise
+ * @param {number} [pressure0] Optional sea-level pressure of the day
  * @returns {number}
  */
 export function pressureFromStandardAltitude(height: number, pressure0: number = P0): number {
@@ -128,7 +139,7 @@ export function pressureFromStandardAltitude(height: number, pressure0: number =
  * Altitude from pressure using the hypsometric formula
  *
  * @param {number} pressure Pressure
- * @param {number} [pressure0] Optional sea-level pressure of the day, P0 otherwise
+ * @param {number} [pressure0] Optional sea-level pressure of the day
  * @param {number} [temp] Optional temperature, T0 otherwise
  * @returns {number}
  */
@@ -141,7 +152,7 @@ export function altitudeFromPressure(pressure: number, pressure0: number, temp: 
  * Pressure from altitude using the hypsometric formula
  *
  * @param {number} height Height
- * @param {number} [pressure0] Optional sea-level pressure of the day, P0 otherwise
+ * @param {number} [pressure0] Optional sea-level pressure of the day
  * @param {number} [temp] Optional temperature, T0 otherwise
  * @returns {number}
  */
@@ -167,8 +178,8 @@ export function waterVaporSaturationPressure(temp: number = T0): number {
  * Relative humidity
  *
  * @param {number} specificHumidity Specific humidity
- * @param {number} [pressure] Optional pressure, P0 otherwise
- * @param {number} [temp] Optional temperature, T0 otherwise
+ * @param {number} [pressure] Optional pressure
+ * @param {number} [temp] Optional temperature
  * @returns {number}
  */
 export function relativeHumidity(specificHumidity: number, pressure: number = P0, temp: number = T0): number {
@@ -189,8 +200,8 @@ export const mixingRatio = (specificHumidity: number) => specificHumidity / (1 -
  * Specific humidity
  *
  * @param {number} relativeHumidity Relative humidity
- * @param {number} [pressure] Optional pressure, P0 otherwise
- * @param {number} [temp] Optional temperature, T0 otherwise
+ * @param {number} [pressure] Optional pressure
+ * @param {number} [temp] Optional temperature
  * @returns {number}
  */
 export function specificHumidity(relativeHumidity: number, pressure: number = P0, temp: number = T0): number {
@@ -203,8 +214,8 @@ export function specificHumidity(relativeHumidity: number, pressure: number = P0
  * Air density
  *
  * @param {number} relativeHumidity Relative humidity
- * @param {number} [pressure] Optional pressure, P0 otherwise
- * @param {number} [temp] Optional temperature, T0 otherwise
+ * @param {number} [pressure] Optional pressure
+ * @param {number} [temp] Optional temperature
  * @returns {number}
  */
 export function airDensity(relativeHumidity: number, pressure: number = P0, temp: number = T0): number {

@@ -106,45 +106,67 @@ Type: [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Globa
 
 ## G
 
+Earth's average gravity acceleration (m/s2)
+
 Type: [number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)
 
 ## Cp
+
+The thermal capacity of air (J/kg)
 
 Type: [number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)
 
 ## L
 
+The enthalpy of vaporization of water (J/kg)
+
 Type: [number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)
 
 ## gamma
+
+The adiabatic lapse rate of dry air (°C/m)
 
 Type: [number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)
 
 ## P0
 
+The average sea level pressure (hPa)
+
 Type: [number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)
 
 ## T0
+
+The temperature of the ICAO standard atmosphere (°C)
 
 Type: [number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)
 
 ## Rd
 
+The specific gas constant of dry air J/(kg\*K)
+
 Type: [number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)
 
 ## Rv
+
+The specific gas constant of water vapor J/(kg\*K)
 
 Type: [number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)
 
 ## Md
 
+Molar mass of dry air kg/mol
+
 Type: [number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)
 
 ## Mv
 
+Molar mass of water vapor kg/mol
+
 Type: [number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)
 
 ## R
+
+Universal gas constant J/(kg\*mol)
 
 Type: [number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)
 
@@ -155,7 +177,7 @@ Altitude from pressure using the barometric formula and ICAO's definition of sta
 ### Parameters
 
 *   `pressure` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** Pressure
-*   `pressure0` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)?** Optional sea-level pressure of the day, P0 otherwise (optional, default `P0`)
+*   `pressure0` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)?** Optional sea-level pressure of the day (optional, default `P0`)
 
 Returns **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** 
 
@@ -166,7 +188,7 @@ Pressure from altitude using the barometric formula and ICAO's definition of sta
 ### Parameters
 
 *   `height` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** Height
-*   `pressure0` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)?** Optional sea-level pressure of the day, P0 otherwise (optional, default `P0`)
+*   `pressure0` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)?** Optional sea-level pressure of the day (optional, default `P0`)
 
 Returns **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** 
 
@@ -177,7 +199,7 @@ Altitude from pressure using the hypsometric formula
 ### Parameters
 
 *   `pressure` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** Pressure
-*   `pressure0` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)?** Optional sea-level pressure of the day, P0 otherwise
+*   `pressure0` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)?** Optional sea-level pressure of the day
 *   `temp` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)?** Optional temperature, T0 otherwise (optional, default `T0`)
 
 Returns **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** 
@@ -189,7 +211,7 @@ Pressure from altitude using the hypsometric formula
 ### Parameters
 
 *   `height` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** Height
-*   `pressure0` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)?** Optional sea-level pressure of the day, P0 otherwise (optional, default `P0`)
+*   `pressure0` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)?** Optional sea-level pressure of the day (optional, default `P0`)
 *   `temp` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)?** Optional temperature, T0 otherwise (optional, default `T0`)
 
 Returns **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** 
@@ -211,8 +233,8 @@ Relative humidity
 ### Parameters
 
 *   `specificHumidity` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** Specific humidity
-*   `pressure` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)?** Optional pressure, P0 otherwise (optional, default `P0`)
-*   `temp` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)?** Optional temperature, T0 otherwise (optional, default `T0`)
+*   `pressure` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)?** Optional pressure (optional, default `P0`)
+*   `temp` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)?** Optional temperature (optional, default `T0`)
 
 Returns **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** 
 
@@ -233,8 +255,8 @@ Specific humidity
 ### Parameters
 
 *   `relativeHumidity` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** Relative humidity
-*   `pressure` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)?** Optional pressure, P0 otherwise (optional, default `P0`)
-*   `temp` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)?** Optional temperature, T0 otherwise (optional, default `T0`)
+*   `pressure` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)?** Optional pressure (optional, default `P0`)
+*   `temp` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)?** Optional temperature (optional, default `T0`)
 
 Returns **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** 
 
@@ -245,7 +267,7 @@ Air density
 ### Parameters
 
 *   `relativeHumidity` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** Relative humidity
-*   `pressure` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)?** Optional pressure, P0 otherwise (optional, default `P0`)
-*   `temp` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)?** Optional temperature, T0 otherwise (optional, default `T0`)
+*   `pressure` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)?** Optional pressure (optional, default `P0`)
+*   `temp` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)?** Optional temperature (optional, default `T0`)
 
 Returns **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** 
