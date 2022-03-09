@@ -1,0 +1,7 @@
+{
+  "spec": "test/*.test.ts",
+  "reporter": "tap",
+  "require": [
+    "ts-node/register"
+  ]
+}
