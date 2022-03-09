@@ -50,6 +50,11 @@ const humidAir = [
   { t: -10, p: 800, h: 80, rho: 1.058 }
 ];
 
+const LCL = [
+  { t: 25, td: 4, lcl: 2660 },
+  { t: -6, td: -10, lcl: 507 }
+];
+
 describe('velitherm', () => {
   describe('ICAO Standard Atmosphere (Barometric equation)', () => {
     describe('altitudeFromStandardPressure', () => {
@@ -72,7 +77,7 @@ describe('velitherm', () => {
   describe('Hypsometric equation', () => {
     describe('altitudeFromPressure', () => {
       for (const lvl of realAtmosphere) {
-        it(`(QNH=${lvl.pres0}hPa, T=${lvl.t}°C) Altitude of ${lvl.pres} hPa should be ${lvl.alt}m`, () => {
+        it(`(QNH=${lvl.pres0}hPa, T=${lvl.t}°C) Altitude of ${lvl.pres}hPa should be ${lvl.alt}m`, () => {
           assert.closeTo(velitherm.altitudeFromPressure(lvl.pres, lvl.pres0, lvl.t), lvl.alt, 5);
         });
       }
@@ -80,7 +85,7 @@ describe('velitherm', () => {
 
     describe('pressureFromAltitude', () => {
       for (const lvl of realAtmosphere) {
-        it(`(QNH=${lvl.pres0}hPa, T=${lvl.t}°C) Altitude at ${lvl.pres} hPa should be ${lvl.alt}m`, () => {
+        it(`(QNH=${lvl.pres0}hPa, T=${lvl.t}°C) Altitude at ${lvl.pres}hPa should be ${lvl.alt}m`, () => {
           assert.closeTo(velitherm.pressureFromAltitude(lvl.alt, lvl.pres0, lvl.t), lvl.pres, 1);
         });
       }
@@ -145,14 +150,22 @@ describe('velitherm', () => {
 
   describe('airDensity', () => {
     for (const lvl of dryAir) {
-      it(`Dry air, sea level, ${lvl.t}°C => rho = ${lvl.rho} kg/m3`, () => {
+      it(`Dry air, sea level, ${lvl.t}°C => rho = ${lvl.rho}kg/m3`, () => {
         assert.closeTo(velitherm.airDensity(0, velitherm.P0, lvl.t), lvl.rho, 1e-3);
       });
     }
 
     for (const lvl of humidAir) {
-      it(`Humid air ${lvl.h}%, ${lvl.p}hPa, ${lvl.t}°C => rho = ${lvl.rho} kg/m3`, () => {
+      it(`Humid air ${lvl.h}%, ${lvl.p}hPa, ${lvl.t}°C => rho = ${lvl.rho}kg/m3`, () => {
         assert.closeTo(velitherm.airDensity(lvl.h, lvl.p, lvl.t), lvl.rho, 1e-2);
+      });
+    }
+  });
+
+  describe('LCL', () => {
+    for (const lvl of LCL) {
+      it(`T ${lvl.t}°C - Td ${lvl.td}°C => LCL = ${lvl.lcl}m`, () => {
+        assert.closeTo(velitherm.LCL(lvl.t, lvl.td), lvl.lcl, 1);
       });
     }
   });

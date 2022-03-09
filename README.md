@@ -131,6 +131,8 @@ if (T1 < 20) {
     *   [Parameters](#parameters-10)
 *   [airDensity](#airdensity)
     *   [Parameters](#parameters-11)
+*   [LCL](#lcl)
+    *   [Parameters](#parameters-12)
 
 ## velitherm
 
@@ -379,3 +381,18 @@ Air density.
 *   `temp` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)?** Optional temperature (optional, default `T0`)
 
 Returns **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** 
+
+## LCL
+
+Lifted Condensation Level.
+
+This is the altitude at which a mechanically lifted air parcel from the ground will condensate.
+
+It corresponds to the cloud base level when the clouds are formed by mechanical lifting.
+
+This the Espy equation with the Stull coefficient.
+
+### Parameters
+
+*   `temp` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** Temperature at 2m
+*   `dewPoint` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** Dew point at 2m

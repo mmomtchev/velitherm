@@ -294,3 +294,17 @@ export function airDensity(relativeHumidity: number, pressure: number = P0, temp
 
   return 100 * (Pd * Md + Pv * Mv) / (R * (temp + 273.15));
 }
+
+/**
+ * Lifted Condensation Level.
+ *
+ * This is the altitude at which a mechanically lifted air parcel from the ground will condensate.
+ *
+ * It corresponds to the cloud base level when the clouds are formed by mechanical lifting.
+ *
+ * This the Espy equation with the Stull coefficient.
+ *
+ * @param {number} temp Temperature at 2m
+ * @param {number} dewPoint Dew point at 2m
+ */
+export const LCL = (temp: number, dewPoint: number) => 126.7 * (temp - dewPoint);
