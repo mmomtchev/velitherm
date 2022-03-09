@@ -1,5 +1,9 @@
 # Velitherm
 
+[![License: LGPL v3](https://img.shields.io/badge/License-LGPL%20v3-blue.svg)](https://www.gnu.org/licenses/lgpl-3.0)
+[![Node.js CI](https://github.com/mmomtchev/velitherm/actions/workflows/node.js.yml/badge.svg)](https://github.com/mmomtchev/velitherm/actions/workflows/node.js.yml)
+[![npm version](https://img.shields.io/npm/v/velitherm)](https://www.npmjs.com/package/velitherm)
+
 A library of basic thermodynamics equations for soaring flight.
 
 As used by the weather site https://www.velivole.fr / https://www.meteo.guru
