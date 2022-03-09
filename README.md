@@ -13,9 +13,13 @@ Zero-dependency!
 
 # Installation
 
-    npm install --save velitherm
+```
+npm install --save velitherm
+```
 
 # Usage
+
+Keep in mind that all equations are numerical approximations of differential equations that have no analytical solutions. The approximations used are the typical weather science approximations which give satisfactory results for temperatures in the range of -40°C to +40°C and air pressures in the range of 1050hPa to 200hPa - which are the typical values in the troposphere.
 
 ## Common JS
 
@@ -40,6 +44,12 @@ import * as velitherm from 'velitherm';
 
 assert(velitherm.altitudeFromPressure(898.746) === 1000);
 ```
+
+## Barometric and hypsometric equations
+
+There is no single analytical equation that can be used to give a precise value for the altitude / pressure relationship. In fact, this relationship depends on the full vertical temperature and humidity profile and it is impossible to reduce to a single formula. There are two levels of approximation that are widely used:
+* The barometric formula, which is an ICAO standard and gives a rough value that does not take into account the pressure or the temperature of the day and it is always constant - in aviation it is referred by the callsign **QNH**
+* The hypsometric formula, which is commonly used in weather science and it is a better estimation that takes into account the pressure and the temperature of the day - so it varies from one day to another - in aviation it is referred by the callsign **QFF**
 
 # Example
 
