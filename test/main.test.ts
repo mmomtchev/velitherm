@@ -60,7 +60,7 @@ const MALR = [
   { p: 1000, t: -20, malr: 8.6e-3 },
   { p: 1000, t: 20, malr: 4.3e-3 },
   { p: 1000, t: 40, malr: 3.0e-3 },
-  { p: 600, t: -20, malr: 8.3e-3 }
+  { p: 600, t: -20, malr: 7.9e-3 }
 ];
 
 describe('velitherm', () => {
@@ -190,7 +190,7 @@ describe('velitherm', () => {
   describe('gammaMoist', () => {
     for (const lvl of MALR) {
       it(`T ${lvl.t}°C, P ${lvl.p}hPa => gamma = ${lvl.malr}°C/m`, () => {
-        assert.closeTo(velitherm.gammaMoist(lvl.t, lvl.p), lvl.malr, 1e-3);
+        assert.closeTo(velitherm.gammaMoist(lvl.t, lvl.p), lvl.malr, 2e-4);
       });
     }
   });
