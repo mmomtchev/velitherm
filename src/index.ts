@@ -111,6 +111,16 @@ export const Mv = 0.018016;
  */
 export const R = 8.31446;
 
+
+/**
+ * Absolute zero in °C
+ *
+ * @const
+ * @type {number}
+ */
+export const K = -273.15;
+
+
 /**
  * Altitude from pressure using the barometric formula and ICAO's definition of standard atmosphere.
  *
@@ -155,7 +165,7 @@ export function pressureFromStandardAltitude(height: number, pressure0: number =
  */
 export function altitudeFromPressure(pressure: number, pressure0: number = P0, temp: number = T0): number {
   temp = temp ?? T0;
-  return Math.round((Math.pow(pressure0 / pressure, 1.0 / 5.257) - 1) * (temp + 273.15) / 0.0065);
+  return Math.round((Math.pow(pressure0 / pressure, 1.0 / 5.257) - 1) * (temp - K) / 0.0065);
 }
 
 /**
@@ -173,7 +183,7 @@ export function altitudeFromPressure(pressure: number, pressure0: number = P0, t
 export function pressureFromAltitude(height: number, pressure0: number = P0, temp: number = T0): number {
   pressure0 = pressure0 ?? P0;
   temp = temp ?? T0;
-  return Math.round(pressure0 * Math.pow(1.0 - 0.0065 * height / (temp + 273.15 + 0.0065 * height), 5.257));
+  return Math.round(pressure0 * Math.pow(1.0 - 0.0065 * height / (temp - K + 0.0065 * height), 5.257));
 }
 
 /**
@@ -206,6 +216,8 @@ export function relativeHumidity(specificHumidity: number, pressure: number = P0
   return specificHumidity / (6.22 * waterVaporSaturationPressure(temp) / pressure);
 }
 
+const Sonntag_1990_b = 17.62;
+const Sonntag_1990_c = 243.12;
 /**
  * Dew point from relative humidity.
  *
@@ -218,12 +230,9 @@ export function relativeHumidity(specificHumidity: number, pressure: number = P0
 export function dewPoint(relativeHumidity: number, temp: number = T0): number {
   temp = temp ?? T0;
 
-  const b = 17.62;
-  const c = 243.12;
+  const gamma = Math.log(relativeHumidity / 100) + Sonntag_1990_b * temp / (Sonntag_1990_c + temp);
 
-  const gamma = Math.log(relativeHumidity / 100) + b * temp / (c + temp);
-
-  return c * gamma / (b - gamma);
+  return Sonntag_1990_c * gamma / (Sonntag_1990_b - gamma);
 }
 
 /**
@@ -238,12 +247,9 @@ export function dewPoint(relativeHumidity: number, temp: number = T0): number {
 export function relativeHumidityFromDewPoint(dewPoint: number, temp: number = T0): number {
   temp = temp ?? T0;
 
-  const b = 17.62;
-  const c = 243.12;
+  const gamma = dewPoint * Sonntag_1990_b / (dewPoint + Sonntag_1990_c);
 
-  const gamma = dewPoint * b / (dewPoint + c);
-
-  return Math.exp(gamma - b * temp / (c + temp)) * 100;
+  return Math.exp(gamma - Sonntag_1990_b * temp / (Sonntag_1990_c + temp)) * 100;
 }
 
 /**
@@ -292,7 +298,7 @@ export function airDensity(relativeHumidity: number, pressure: number = P0, temp
   const Pv = relativeHumidity / 100 * Psat;
   const Pd = pressure - Pv;
 
-  return 100 * (Pd * Md + Pv * Mv) / (R * (temp + 273.15));
+  return 100 * (Pd * Md + Pv * Mv) / (R * (temp - K));
 }
 
 /**
@@ -322,10 +328,10 @@ export const LCL = (temp: number, dewPoint: number) => 126.7 * (temp - dewPoint)
 export function gammaMoist(temp: number, pressure: number = P0): number {
   pressure = pressure ?? P0;
 
-  const tK = temp + 273.15;
-  const es = 6.113 * Math.exp(5423 * (1 / 273.15 - 1 / tK));
+  const tK = temp - K;
+  const es = 6.113 * Math.exp(5423 * (-1 / K - 1 / tK));
   const rs = 0.622 * es / (pressure - es);
-  const gamma = 9.8e-3 * (1 + 8711 * rs / tK) / (1 + 1.35e7 * rs / (tK * tK));
+  const gamma = G * 1e-3 * (1 + 8711 * rs / tK) / (1 + 1.35e7 * rs / (tK * tK));
 
   return gamma;
 }
