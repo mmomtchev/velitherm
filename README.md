@@ -69,7 +69,7 @@ console.log('Pressure at 500m = ', Math.round(P1), 'hPa');
 
 // Take into account the adiabatic cooling
 const T1 = 25 - 500 * velitherm.gamma;
-console.log('The new temperature of the air parcel at 500m = ', T1, '°C');
+console.log('The new temperature of the air parcel at 500m = ', (T1-25)/2, '°C');
 
 // Compute the new relative humidity of the air parcel at this pressure and temperature
 const w1 = velitherm.relativeHumidity(q, P1, T1);
@@ -133,6 +133,8 @@ if (T1 < 20) {
     *   [Parameters](#parameters-11)
 *   [LCL](#lcl)
     *   [Parameters](#parameters-12)
+*   [gammaMoist](#gammamoist)
+    *   [Parameters](#parameters-13)
 
 ## velitherm
 
@@ -266,7 +268,7 @@ It is used when calculating the QFF.
 
 *   `pressure` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** Pressure
 *   `pressure0` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)?** Optional sea-level pressure of the day
-*   `temp` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)?** Optional temperature (optional, default `T0`)
+*   `temp` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)?** Optional average temperature from the ground to the given level (optional, default `T0`)
 
 Returns **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** 
 
@@ -282,7 +284,7 @@ It is used when calculating the QFF.
 
 *   `height` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** Height
 *   `pressure0` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)?** Optional sea-level pressure of the day (optional, default `P0`)
-*   `temp` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)?** Optional temperature (optional, default `T0`)
+*   `temp` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)?** Optional average temperature from the ground to the given level (optional, default `T0`)
 
 Returns **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** 
 
@@ -390,9 +392,20 @@ This is the altitude at which a mechanically lifted air parcel from the ground w
 
 It corresponds to the cloud base level when the clouds are formed by mechanical lifting.
 
-This the Espy equation with the Stull coefficient.
+This is the Espy equation with the Stull coefficient.
 
 ### Parameters
 
 *   `temp` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** Temperature at 2m
 *   `dewPoint` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** Dew point at 2m
+
+## gammaMoist
+
+Moist adiabatic lapse rate from pressure and temperature.
+
+(Roland Stull, Practical Meteorology)
+
+### Parameters
+
+*   `temp` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** Temperature
+*   `pressure` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)?** Optional pressure (optional, default `P0`)

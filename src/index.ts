@@ -306,5 +306,26 @@ export function airDensity(relativeHumidity: number, pressure: number = P0, temp
  *
  * @param {number} temp Temperature at 2m
  * @param {number} dewPoint Dew point at 2m
+ * @returns {number}
  */
 export const LCL = (temp: number, dewPoint: number) => 126.7 * (temp - dewPoint);
+
+/**
+ * Moist adiabatic lapse rate from pressure and temperature.
+ *
+ * (Roland Stull, Practical Meteorology)
+ *
+ * @param {number} temp Temperature
+ * @param {number} [pressure] Optional pressure
+ * @returns {number}
+ */
+export function gammaMoist(temp: number, pressure: number = P0): number {
+  pressure = pressure ?? P0;
+
+  const tK = temp + 273.15;
+  const es = 6.113 * Math.exp(5423 * (1 / 273.15 - 1 / tK));
+  const rs = 0.622 * es / (pressure - es);
+  const gamma = 9.8e-3 * (1 + 8711 * rs / tK) / (1 + 1.35e7 * rs / (tK * tK));
+
+  return gamma;
+}

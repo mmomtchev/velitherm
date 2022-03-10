@@ -4,6 +4,7 @@
  - Add `specificHumidityFromMixingRatio`
  - Add `dewPoint`
  - Add `relativeHumidityFromDewPoint`
+ - Add `gammaMoist`
  - Add `LCL`
  - Add an example
  - Documentation improvements
