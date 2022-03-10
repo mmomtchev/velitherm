@@ -1,7 +1,8 @@
 {
   "compilerOptions": {
     "module": "commonjs",
-    "outDir": "./dist/cjs/"
+    "outDir": "./dist/cjs/",
+    "sourceMap": true
   },
   "include": [
     "./src/index.ts"

@@ -2,7 +2,8 @@
   "compilerOptions": {
     "outDir": "dist/es",
     "module": "es6",
-    "declaration": true
+    "declaration": true,
+    "sourceMap": true
   },
   "include": [
     "./src/index.ts"
