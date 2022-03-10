@@ -1,6 +1,7 @@
 # Changelog
 
-## [1.1.0] WIP
+## [1.1.0] 2022-03-10
+
  - Add `specificHumidityFromMixingRatio`
  - Add `dewPoint`
  - Add `relativeHumidityFromDewPoint`
@@ -11,5 +12,4 @@
 
 # [1.0.0] 2022-03-09
 
-### Added
  - First release
