@@ -132,7 +132,6 @@ export const K = -273.15;
  * @returns {number}
  */
 export function altitudeFromStandardPressure(pressure: number, pressure0: number = P0): number {
-  pressure0 = pressure0 ?? P0;
   return 44330.0 * (1.0 - Math.pow(pressure / pressure0, 1 / 5.255));
 }
 
@@ -147,7 +146,6 @@ export function altitudeFromStandardPressure(pressure: number, pressure0: number
  * @returns {number}
  */
 export function pressureFromStandardAltitude(height: number, pressure0: number = P0): number {
-  pressure0 = pressure0 ?? P0;
   return pressure0 * Math.pow(1 - height / 44330.0, 5.255);
 }
 
@@ -164,7 +162,6 @@ export function pressureFromStandardAltitude(height: number, pressure0: number =
  * @returns {number}
  */
 export function altitudeFromPressure(pressure: number, pressure0: number = P0, temp: number = T0): number {
-  temp = temp ?? T0;
   return Math.round((Math.pow(pressure0 / pressure, 1.0 / 5.257) - 1) * (temp - K) / 0.0065);
 }
 
@@ -181,8 +178,6 @@ export function altitudeFromPressure(pressure: number, pressure0: number = P0, t
  * @returns {number}
  */
 export function pressureFromAltitude(height: number, pressure0: number = P0, temp: number = T0): number {
-  pressure0 = pressure0 ?? P0;
-  temp = temp ?? T0;
   return Math.round(pressure0 * Math.pow(1.0 - 0.0065 * height / (temp - K + 0.0065 * height), 5.257));
 }
 
@@ -197,8 +192,6 @@ export function pressureFromAltitude(height: number, pressure0: number = P0, tem
  * @returns {number}
  */
 export function waterVaporSaturationPressure(temp: number = T0): number {
-  temp = temp ?? T0;
-
   return 6.1078 * Math.exp(17.27 * temp / (temp + 237.3));
 }
 
@@ -211,8 +204,6 @@ export function waterVaporSaturationPressure(temp: number = T0): number {
  * @returns {number}
  */
 export function relativeHumidity(specificHumidity: number, pressure: number = P0, temp: number = T0): number {
-  pressure = pressure ?? P0;
-  temp = temp ?? T0;
   return specificHumidity / (6.22 * waterVaporSaturationPressure(temp) / pressure);
 }
 
@@ -228,8 +219,6 @@ const Sonntag_1990_c = 243.12;
  * @returns {number}
  */
 export function dewPoint(relativeHumidity: number, temp: number = T0): number {
-  temp = temp ?? T0;
-
   const gamma = Math.log(relativeHumidity / 100) + Sonntag_1990_b * temp / (Sonntag_1990_c + temp);
 
   return Sonntag_1990_c * gamma / (Sonntag_1990_b - gamma);
@@ -245,8 +234,6 @@ export function dewPoint(relativeHumidity: number, temp: number = T0): number {
  * @returns {number}
  */
 export function relativeHumidityFromDewPoint(dewPoint: number, temp: number = T0): number {
-  temp = temp ?? T0;
-
   const gamma = dewPoint * Sonntag_1990_b / (dewPoint + Sonntag_1990_c);
 
   return Math.exp(gamma - Sonntag_1990_b * temp / (Sonntag_1990_c + temp)) * 100;
@@ -277,8 +264,6 @@ export const specificHumidityFromMixingRatio = (mixingRatio: number) => mixingRa
  * @returns {number}
  */
 export function specificHumidity(relativeHumidity: number, pressure: number = P0, temp: number = T0): number {
-  pressure = pressure ?? P0;
-  temp = temp ?? T0;
   return relativeHumidity / 100 * (0.622 * waterVaporSaturationPressure(temp) / pressure) * 1000;
 }
 
@@ -291,9 +276,6 @@ export function specificHumidity(relativeHumidity: number, pressure: number = P0
  * @returns {number}
  */
 export function airDensity(relativeHumidity: number, pressure: number = P0, temp: number = T0): number {
-  pressure = pressure ?? P0;
-  temp = temp ?? T0;
-
   const Psat = waterVaporSaturationPressure(temp);
   const Pv = relativeHumidity / 100 * Psat;
   const Pd = pressure - Pv;
@@ -326,8 +308,6 @@ export const LCL = (temp: number, dewPoint: number) => 126.7 * (temp - dewPoint)
  * @returns {number}
  */
 export function gammaMoist(temp: number, pressure: number = P0): number {
-  pressure = pressure ?? P0;
-
   const tK = temp - K;
   const es = 6.113 * Math.exp(5423 * (-1 / K - 1 / tK));
   const rs = 0.622 * es / (pressure - es);
