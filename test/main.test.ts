@@ -85,18 +85,24 @@ describe('velitherm', () => {
   describe('Hypsometric equation', () => {
     describe('altitudeFromPressure', () => {
       for (const lvl of realAtmosphere) {
-        it(`(QNH=${lvl.pres0}hPa, T=${lvl.t}°C) Altitude of ${lvl.pres}hPa should be ${lvl.alt}m`, () => {
+        it(`(QFF=${lvl.pres0}hPa, T=${lvl.t}°C) Altitude of ${lvl.pres}hPa should be ${lvl.alt}m`, () => {
           assert.closeTo(velitherm.altitudeFromPressure(lvl.pres, lvl.pres0, lvl.t), lvl.alt, 5);
         });
       }
+      it(`(QFF=${velitherm.P0}hPa, T=${velitherm.T0}°C) Altitude of ${velitherm.P0}hPa should be 0m`, () => {
+        assert.closeTo(velitherm.altitudeFromPressure(velitherm.P0), 0, 5);
+      });
     });
 
     describe('pressureFromAltitude', () => {
       for (const lvl of realAtmosphere) {
-        it(`(QNH=${lvl.pres0}hPa, T=${lvl.t}°C) Altitude at ${lvl.pres}hPa should be ${lvl.alt}m`, () => {
+        it(`(QFF=${lvl.pres0}hPa, T=${lvl.t}°C) Altitude at ${lvl.pres}hPa should be ${lvl.alt}m`, () => {
           assert.closeTo(velitherm.pressureFromAltitude(lvl.alt, lvl.pres0, lvl.t), lvl.pres, 1);
         });
       }
+      it(`(QFF=${velitherm.P0}hPa, T=${velitherm.T0}°C) Altitude at ${velitherm.P0}hPa should be 0m`, () => {
+        assert.closeTo(velitherm.pressureFromAltitude(0), velitherm.P0, 1);
+      });
     });
   });
 
@@ -107,6 +113,9 @@ describe('velitherm', () => {
         assert.closeTo(velitherm.waterVaporSaturationPressure(lvl.t), lvl.Preal, 1);
       });
     }
+    it(`Water Vapor (Saturation) Pressure at ${velitherm.T0}°C should be ${17.0529}hPa`, () => {
+      assert.closeTo(velitherm.waterVaporSaturationPressure(), 17.0529, 0.1);
+    });
   });
 
   describe('Humidity', () => {

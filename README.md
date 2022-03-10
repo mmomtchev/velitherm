@@ -267,7 +267,7 @@ It is used when calculating the QFF.
 ### Parameters
 
 *   `pressure` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** Pressure
-*   `pressure0` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)?** Optional sea-level pressure of the day
+*   `pressure0` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)?** Optional sea-level pressure of the day (optional, default `P0`)
 *   `temp` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)?** Optional average temperature from the ground to the given level (optional, default `T0`)
 
 Returns **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** 
@@ -399,6 +399,8 @@ This is the Espy equation with the Stull coefficient.
 *   `temp` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** Temperature at 2m
 *   `dewPoint` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** Dew point at 2m
 
+Returns **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** 
+
 ## gammaMoist
 
 Moist adiabatic lapse rate from pressure and temperature.
@@ -409,3 +411,5 @@ Moist adiabatic lapse rate from pressure and temperature.
 
 *   `temp` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** Temperature
 *   `pressure` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)?** Optional pressure (optional, default `P0`)
+
+Returns **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** 

@@ -153,7 +153,7 @@ export function pressureFromStandardAltitude(height: number, pressure0: number =
  * @param {number} [temp] Optional average temperature from the ground to the given level
  * @returns {number}
  */
-export function altitudeFromPressure(pressure: number, pressure0: number, temp: number = T0): number {
+export function altitudeFromPressure(pressure: number, pressure0: number = P0, temp: number = T0): number {
   temp = temp ?? T0;
   return Math.round((Math.pow(pressure0 / pressure, 1.0 / 5.257) - 1) * (temp + 273.15) / 0.0065);
 }
