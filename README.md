@@ -11,6 +11,10 @@ As used by the weather site https://www.velivole.fr / https://www.meteo.guru
 
 Zero-dependency!
 
+If you are new to weather thermodynamics, you should probably start here: [Basic Concepts of Thermodynamics for Soaring Flight](https://github.com/mmomtchev/velivole/blob/main/THERMODYNAMICS.md)
+
+*Si vous n'êtes pas à l'aise en thermodynamique appliquée à la météorologie, vous devriez peut-être commencer ici: [Bases de la thermodynamique pour le vol libre et le vol à voile](https://github.com/mmomtchev/velivole/blob/main/THERMODYNAMIQUE.md)*
+
 # Installation
 
     npm install --save velitherm
