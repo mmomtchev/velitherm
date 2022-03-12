@@ -45,7 +45,7 @@ export const Cp = 1005;
  * @const
  * @type {number}
  */
-export const L = 2500 * 10e6;
+export const L = 2.5e6;
 
 /**
  * The adiabatic lapse rate of dry air (°C/m)
