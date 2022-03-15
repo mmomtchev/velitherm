@@ -55,6 +55,7 @@ There is no single analytical equation that can be used to give a precise value 
 *   The hypsometric formula, which is commonly used in weather science and it is a better estimation that takes into account the pressure and the temperature of the day - so it varies from one day to another - in aviation it is referred by the callsign **QFF**
 
 If you are coming from an aviation background, and **QNH**, **QFF** and **QFE** are altimeter settings to you, then you should know that they actually refer to different equations for calculating the altitude from the pressure. **QFE** refers to the surface pressure of a given site - airport or weather station - and not an equation. If you want to use `velitherm` to convert between altimeter settings, the right way to do it would be to convert the pressure to altitude using the input setting and then convert it back to pressure using the output setting.
+
 # Example
 
 An air parcel with relative humidify of 75% and temperature of 25°C rises from 0m AMSL to 500m AMSL where the surrounding temperature is 20°C. What is its new relative humidity? What is its new temperature? Has there been condensation and did it form a cloud? Has the ceiling being reached or will the air parcel continue to rise? The pressure of the day is 1017hPa.
@@ -112,6 +113,7 @@ if (T1 < 20) {
 *   [Md](#md)
 *   [Mv](#mv)
 *   [R](#r)
+*   [K](#k)
 *   [altitudeFromStandardPressure](#altitudefromstandardpressure)
     *   [Parameters](#parameters)
 *   [pressureFromStandardAltitude](#pressurefromstandardaltitude)
@@ -140,6 +142,11 @@ if (T1 < 20) {
     *   [Parameters](#parameters-12)
 *   [gammaMoist](#gammamoist)
     *   [Parameters](#parameters-13)
+*   [adiabaticExpansion](#adiabaticexpansion)
+    *   [Parameters](#parameters-14)
+*   [adiabaticCooling](#adiabaticcooling)
+    *   [Parameters](#parameters-15)
+    *   [Examples](#examples)
 
 ## velitherm
 
@@ -230,6 +237,12 @@ Type: [number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Globa
 ## R
 
 Universal gas constant J/(kg\*mol)
+
+Type: [number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)
+
+## K
+
+Absolute zero in °C
 
 Type: [number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)
 
@@ -416,5 +429,63 @@ Moist adiabatic lapse rate from pressure and temperature.
 
 *   `temp` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** Temperature
 *   `pressure` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)?** Optional pressure (optional, default `P0`)
+
+Returns **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** 
+
+## adiabaticExpansion
+
+Adiabatic expansion rate from pressure change rate.
+
+This equation allows to calculate the expansion ratio of an air parcel from the
+the previous pressure and the new pressure.
+
+An adiabatic expansion is an isentropic process that is governed by the Ideal gas law
+in general and the constant entropy relationship in particular:
+(P / P0) = (V / V0) ^ gamma
+Where P=pressure, V=volume, gamma=heat capacity ratio (1.4 for air, a diatomic gas)
+
+### Parameters
+
+*   `volume0` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** Old volume
+*   `pressure` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** New pressure
+*   `pressure0` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** Old pressure (optional, default `P0`)
+
+Returns **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** 
+
+## adiabaticCooling
+
+Adiabatic cooling rate from pressure change rate.
+
+This equation allows to calculate the cooling ratio of an air parcel from the
+the previous pressure and the new pressure.
+
+It is by combining this equation with the barometric equation
+that the adiabatic lapse rate of dry air can be obtained.
+
+An adiabatic expansion is an isentropic process that is governed by the Ideal gas law
+in general and the constant entropy relationship in particular:
+(P / P0) = (V / V0) ^ gamma
+Where P=pressure, V=volume, gamma=heat capacity ratio (1.4 for air, a diatomic gas)
+
+### Parameters
+
+*   `temp0` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** Old temperature
+*   `pressure` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** New pressure
+*   `pressure0` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** Old pressure (optional, default `P0`)
+
+### Examples
+
+```javascript
+// Compute the adiabatic cooling per meter
+// when rising from 0m AMSL to 100m AMSL starting at 15°C
+
+const gamma = (15 - velitherm.adiabaticCooling(15,
+                      velitherm.pressureFromStandardAltitude(100),
+                      velitherm.pressureFromStandardAltitude(0))
+               ) / 100;
+
+// It should be very close the provided constant
+assert(Math.abs(gamma - velitherm.gamma) < 1e-5)
+```
 
 Returns **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** 

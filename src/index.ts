@@ -315,3 +315,71 @@ export function gammaMoist(temp: number, pressure: number = P0): number {
 
   return gamma;
 }
+
+// Compute the adiabatic expansion from the pressure ratio
+//
+// Adiabatic expansion is governed by the Ideal gas law
+// P * V = n * R * T
+// where P=pressure, V=volume, n=molar quantity, R=ideal gas constant, T=temperature
+// Additionally adiabatic expansion is an isentropic process (constant entropy), which gives:
+// V = V0 * (P / P0) ^ (-1 / Gamma) where Gamma is the heat capacity ratio
+// Air is mostly a diatomic gas, so Gamma is 1.4
+//
+// Refer to https://en.wikipedia.org/wiki/Ideal_gas_law
+// (this is not true during condensation)
+
+const HCR = 1.4;
+/**
+ * Adiabatic expansion rate from pressure change rate.
+ *
+ * This equation allows to calculate the expansion ratio of an air parcel from the
+ * the previous pressure and the new pressure.
+ *
+ * An adiabatic expansion is an isentropic process that is governed by the Ideal gas law
+ * in general and the constant entropy relationship in particular:
+ * (P / P0) = (V / V0) ^ gamma
+ * Where P=pressure, V=volume, gamma=heat capacity ratio (1.4 for air, a diatomic gas)
+ *
+ * @param {number} volume0 Old volume
+ * @param {number} pressure New pressure
+ * @param {number} pressure0 Old pressure
+ * @returns {number}
+ */
+export function adiabaticExpansion(volume0: number, pressure: number, pressure0: number = P0): number {
+  return volume0 * Math.pow(pressure0 / pressure, 1 / HCR);
+}
+
+/**
+ * Adiabatic cooling rate from pressure change rate.
+ *
+ * This equation allows to calculate the cooling ratio of an air parcel from the
+ * the previous pressure and the new pressure.
+ *
+ * It is by combining this equation with the barometric equation
+ * that the adiabatic lapse rate of dry air can be obtained.
+ *
+ * An adiabatic expansion is an isentropic process that is governed by the Ideal gas law
+ * in general and the constant entropy relationship in particular:
+ * (P / P0) = (V / V0) ^ gamma
+ * Where P=pressure, V=volume, gamma=heat capacity ratio (1.4 for air, a diatomic gas)
+ *
+ * @example
+ * // Compute the adiabatic cooling per meter
+ * // when rising from 0m AMSL to 100m AMSL starting at 15°C
+ *
+ * const gamma = (15 - velitherm.adiabaticCooling(15,
+ *                       velitherm.pressureFromStandardAltitude(100),
+ *                       velitherm.pressureFromStandardAltitude(0))
+ *                ) / 100;
+ *
+ * // It should be very close the provided constant
+ * assert(Math.abs(gamma - velitherm.gamma) < 1e-5)
+ *
+ * @param {number} temp0 Old temperature
+ * @param {number} pressure New pressure
+ * @param {number} pressure0 Old pressure
+ * @returns {number}
+ */
+export function adiabaticCooling(temp0: number, pressure: number, pressure0: number = P0): number {
+  return (temp0 - K) * Math.pow(pressure / pressure0, (HCR - 1) / HCR) + K;
+}
