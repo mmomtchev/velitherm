@@ -324,6 +324,8 @@ Returns **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/G
 
 Relative humidity from specific humidity.
 
+This is from the Magnus-Tetens approximation.
+
 ### Parameters
 
 *   `specificHumidity` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** Specific humidity
@@ -362,6 +364,8 @@ Returns **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/G
 
 Mixing ratio from specific humidity.
 
+Analytic equation from the definition.
+
 ### Parameters
 
 *   `specificHumidity` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** Specific humidity
@@ -372,6 +376,8 @@ Returns **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/G
 
 Specific humidity from mixing ratio.
 
+Analytic equation from the definition.
+
 ### Parameters
 
 *   `mixingRatio` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** Mixing ratio
@@ -381,6 +387,8 @@ Returns **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/G
 ## specificHumidity
 
 Specific humidity from relative humidity.
+
+Approximation of the Magnus equation with the Sonntag 1990 coefficients.
 
 ### Parameters
 
@@ -393,6 +401,8 @@ Returns **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/G
 ## airDensity
 
 Air density.
+
+Analytic equation from Avogadro's Law.
 
 ### Parameters
 
@@ -410,7 +420,7 @@ This is the altitude at which a mechanically lifted air parcel from the ground w
 
 It corresponds to the cloud base level when the clouds are formed by mechanical lifting.
 
-This is the Espy equation with the Stull coefficient.
+This approximation is known as the Espy equation with the Stull coefficient.
 
 ### Parameters
 
@@ -423,7 +433,9 @@ Returns **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/G
 
 Moist adiabatic lapse rate from pressure and temperature.
 
-(Roland Stull, Practical Meteorology)
+Copied from Roland Stull, Practical Meteorology (copylefted, available online).
+
+Rather complex approximation based on the Magnus-Tetens equation and the barometric equation.
 
 ### Parameters
 
@@ -443,6 +455,8 @@ An adiabatic expansion is an isentropic process that is governed by the Ideal ga
 in general and the constant entropy relationship in particular:
 (P / P0) = (V / V0) ^ gamma
 Where P=pressure, V=volume, gamma=heat capacity ratio (1.4 for air, a diatomic gas)
+
+Analytic equation.
 
 ### Parameters
 
@@ -467,6 +481,17 @@ in general and the constant entropy relationship in particular:
 (P / P0) = (V / V0) ^ gamma
 Where P=pressure, V=volume, gamma=heat capacity ratio (1.4 for air, a diatomic gas)
 
+Keep in mind that if you intend to use this method to calculate a rate relative
+to height in meters, you will need very precise altitude calculations for good
+results. As the dry adiabatic rate is a constant that does not depend on the
+temperature or the pressure, most of the time you will be better off simply
+using the `gamma` constant.
+
+<https://en.wikipedia.org/wiki/Ideal_gas_law> contains a very good
+introduction to this subject.
+
+Analytic equation.
+
 ### Parameters
 
 *   `temp0` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** Old temperature
@@ -484,7 +509,7 @@ const gamma = (15 - velitherm.adiabaticCooling(15,
                       velitherm.pressureFromStandardAltitude(0))
                ) / 100;
 
-// It should be very close the provided constant
+// It should be very close to the provided constant
 assert(Math.abs(gamma - velitherm.gamma) < 1e-5)
 ```
 
