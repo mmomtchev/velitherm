@@ -162,7 +162,7 @@ export function pressureFromStandardAltitude(height: number, pressure0: number =
  * @returns {number}
  */
 export function altitudeFromPressure(pressure: number, pressure0: number = P0, temp: number = T0): number {
-  return Math.round((Math.pow(pressure0 / pressure, 1.0 / 5.257) - 1) * (temp - K) / 0.0065);
+  return (Math.pow(pressure0 / pressure, 1.0 / 5.257) - 1) * (temp - K) / 0.0065;
 }
 
 /**
@@ -178,7 +178,7 @@ export function altitudeFromPressure(pressure: number, pressure0: number = P0, t
  * @returns {number}
  */
 export function pressureFromAltitude(height: number, pressure0: number = P0, temp: number = T0): number {
-  return Math.round(pressure0 * Math.pow(1.0 - 0.0065 * height / (temp - K + 0.0065 * height), 5.257));
+  return pressure0 * Math.pow(1.0 - 0.0065 * height / (temp - K + 0.0065 * height), 5.257);
 }
 
 /**
@@ -197,6 +197,8 @@ export function waterVaporSaturationPressure(temp: number = T0): number {
 
 /**
  * Relative humidity from specific humidity.
+ *
+ * This is from the Magnus-Tetens approximation.
  *
  * @param {number} specificHumidity Specific humidity
  * @param {number} [pressure] Optional pressure
@@ -242,6 +244,8 @@ export function relativeHumidityFromDewPoint(dewPoint: number, temp: number = T0
 /**
  * Mixing ratio from specific humidity.
  *
+ * Analytic equation from the definition.
+ *
  * @param {number} specificHumidity Specific humidity
  * @returns {number}
  */
@@ -250,6 +254,8 @@ export const mixingRatio = (specificHumidity: number) => specificHumidity / (1 -
 /**
  * Specific humidity from mixing ratio.
  *
+ * Analytic equation from the definition.
+ *
  * @param {number} mixingRatio Mixing ratio
  * @returns {number}
  */
@@ -257,6 +263,8 @@ export const specificHumidityFromMixingRatio = (mixingRatio: number) => mixingRa
 
 /**
  * Specific humidity from relative humidity.
+ *
+ * Approximation of the Magnus equation with the Sonntag 1990 coefficients.
  *
  * @param {number} relativeHumidity Relative humidity
  * @param {number} [pressure] Optional pressure
@@ -269,6 +277,8 @@ export function specificHumidity(relativeHumidity: number, pressure: number = P0
 
 /**
  * Air density.
+ *
+ * Analytic equation from Avogadro's Law.
  *
  * @param {number} relativeHumidity Relative humidity
  * @param {number} [pressure] Optional pressure
@@ -290,7 +300,7 @@ export function airDensity(relativeHumidity: number, pressure: number = P0, temp
  *
  * It corresponds to the cloud base level when the clouds are formed by mechanical lifting.
  *
- * This is the Espy equation with the Stull coefficient.
+ * This approximation is known as the Espy equation with the Stull coefficient.
  *
  * @param {number} temp Temperature at 2m
  * @param {number} dewPoint Dew point at 2m
@@ -301,7 +311,9 @@ export const LCL = (temp: number, dewPoint: number) => 126.7 * (temp - dewPoint)
 /**
  * Moist adiabatic lapse rate from pressure and temperature.
  *
- * (Roland Stull, Practical Meteorology)
+ * Copied from Roland Stull, Practical Meteorology (copylefted, available online).
+ *
+ * Rather complex approximation based on the Magnus-Tetens equation and the barometric equation.
  *
  * @param {number} temp Temperature
  * @param {number} [pressure] Optional pressure
@@ -316,18 +328,6 @@ export function gammaMoist(temp: number, pressure: number = P0): number {
   return gamma;
 }
 
-// Compute the adiabatic expansion from the pressure ratio
-//
-// Adiabatic expansion is governed by the Ideal gas law
-// P * V = n * R * T
-// where P=pressure, V=volume, n=molar quantity, R=ideal gas constant, T=temperature
-// Additionally adiabatic expansion is an isentropic process (constant entropy), which gives:
-// V = V0 * (P / P0) ^ (-1 / Gamma) where Gamma is the heat capacity ratio
-// Air is mostly a diatomic gas, so Gamma is 1.4
-//
-// Refer to https://en.wikipedia.org/wiki/Ideal_gas_law
-// (this is not true during condensation)
-
 const HCR = 1.4;
 /**
  * Adiabatic expansion rate from pressure change rate.
@@ -339,6 +339,8 @@ const HCR = 1.4;
  * in general and the constant entropy relationship in particular:
  * (P / P0) = (V / V0) ^ gamma
  * Where P=pressure, V=volume, gamma=heat capacity ratio (1.4 for air, a diatomic gas)
+ *
+ * Analytic equation.
  *
  * @param {number} volume0 Old volume
  * @param {number} pressure New pressure
@@ -363,6 +365,17 @@ export function adiabaticExpansion(volume0: number, pressure: number, pressure0:
  * (P / P0) = (V / V0) ^ gamma
  * Where P=pressure, V=volume, gamma=heat capacity ratio (1.4 for air, a diatomic gas)
  *
+ * Keep in mind that if you intend to use this method to calculate a rate relative
+ * to height in meters, you will need very precise altitude calculations for good
+ * results. As the dry adiabatic rate is a constant that does not depend on the
+ * temperature or the pressure, most of the time you will be better off simply
+ * using the `gamma` constant.
+ *
+ * https://en.wikipedia.org/wiki/Ideal_gas_law contains a very good
+ * introduction to this subject.
+ *
+ * Analytic equation.
+ *
  * @example
  * // Compute the adiabatic cooling per meter
  * // when rising from 0m AMSL to 100m AMSL starting at 15°C
@@ -372,7 +385,7 @@ export function adiabaticExpansion(volume0: number, pressure: number, pressure0:
  *                       velitherm.pressureFromStandardAltitude(0))
  *                ) / 100;
  *
- * // It should be very close the provided constant
+ * // It should be very close to the provided constant
  * assert(Math.abs(gamma - velitherm.gamma) < 1e-5)
  *
  * @param {number} temp0 Old temperature
