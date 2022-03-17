@@ -23,6 +23,8 @@ If you are new to weather thermodynamics, you should probably start here: [Basic
 
 Keep in mind that some equations are numerical approximations of differential equations that have no analytic solutions. The approximations used are the typical weather science approximations which produce good results for temperatures in the range of -40°C to +40°C and air pressures in the range of 1050hPa to 200hPa - which are the typical values in the troposphere - but often lack precision outside this range.
 
+You can check [velitherm-visu](https://github.com/mmomtchev/velitherm-visu) for a real-world example of using this library. It is available at [aircalc.velivole.fr](https://aircalc.velivole.fr).
+
 ## Common JS
 
 ```js
