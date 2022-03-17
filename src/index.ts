@@ -249,7 +249,9 @@ export function relativeHumidityFromDewPoint(dewPoint: number, temp: number = T0
  * @param {number} specificHumidity Specific humidity
  * @returns {number}
  */
-export const mixingRatio = (specificHumidity: number) => specificHumidity / (1 - specificHumidity / 1000);
+export function mixingRatio(specificHumidity: number) {
+  return specificHumidity / (1 - specificHumidity / 1000);
+}
 
 /**
  * Specific humidity from mixing ratio.
@@ -259,7 +261,9 @@ export const mixingRatio = (specificHumidity: number) => specificHumidity / (1 -
  * @param {number} mixingRatio Mixing ratio
  * @returns {number}
  */
-export const specificHumidityFromMixingRatio = (mixingRatio: number) => mixingRatio / (1 + mixingRatio / 1000);
+export function specificHumidityFromMixingRatio(mixingRatio: number) {
+  return mixingRatio / (1 + mixingRatio / 1000);
+}
 
 /**
  * Specific humidity from relative humidity.
@@ -306,7 +310,9 @@ export function airDensity(relativeHumidity: number, pressure: number = P0, temp
  * @param {number} dewPoint Dew point at 2m
  * @returns {number}
  */
-export const LCL = (temp: number, dewPoint: number) => 126.7 * (temp - dewPoint);
+export function LCL(temp: number, dewPoint: number) {
+  return 126.7 * (temp - dewPoint);
+}
 
 /**
  * Moist adiabatic lapse rate from pressure and temperature.

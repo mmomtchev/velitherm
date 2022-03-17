@@ -3,3 +3,4 @@ coverage
 .vscode
 .github
 .git
+test/test_cc
