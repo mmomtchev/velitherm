@@ -1,6 +1,6 @@
 {
   "name": "velitherm",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Basic Thermodynamics Equations for Soaring Flight (from velivole.fr/meteo.guru)",
   "main": "./dist/cjs/index.js",
   "module": "./dist/es/index.js",

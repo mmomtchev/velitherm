@@ -17,9 +17,7 @@ If you are new to weather thermodynamics, you should probably start here: [Basic
 
 # Installation
 
-```
-npm install --save velitherm
-```
+    npm install --save velitherm
 
 # Usage
 
