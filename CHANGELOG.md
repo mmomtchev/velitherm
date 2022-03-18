@@ -1,6 +1,6 @@
 # Changelog
 
-## [1.2.0] WIP
+## [1.2.0] 2020-03-18
  - Add C/C++ support
  - Add `adiabaticCooling` and `adiabaticExpansion`
  - Do not round the results from `pressureFromAltitude` and `altitudeFromPressure`
