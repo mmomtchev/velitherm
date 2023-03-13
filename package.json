@@ -47,7 +47,7 @@
     "chai": "^4.3.6",
     "documentation": "^14.0.1",
     "eslint": "^8.34.0",
-    "eslint-plugin-array-func": "^3.1.7",
+    "eslint-plugin-array-func": "^3.1.8",
     "eslint-plugin-mocha": "^10.0.3",
     "eslint-plugin-prefer-arrow": "^1.2.3",
     "mocha": "^10.1.0",
