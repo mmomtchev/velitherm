@@ -17,7 +17,9 @@ If you are new to weather thermodynamics, you should probably start here: [Basic
 
 # Installation
 
-    npm install --save velitherm
+```bash
+npm install --save velitherm
+```
 
 # Usage
 
@@ -72,7 +74,7 @@ If you are coming from an aviation background, and **QNH**, **QFF** and **QFE** 
 
 # Example
 
-An air parcel with relative humidify of 75% and temperature of 25°C rises from 0m AMSL to 500m AMSL where the surrounding temperature is 20°C. What is its new relative humidity? What is its new temperature? Has there been condensation and did it form a cloud? Has the ceiling being reached or will the air parcel continue to rise? The pressure of the day is 1017hPa and the relative humidity at 500m AMSL is 50%.
+An air parcel with relative humidify of 75% and temperature of 25°C rises from 0m AMSL to 500m AMSL where the surrounding temperature is 20°C. What is its new relative humidity? What is its new temperature? Has there been condensation and did it form a cloud? Has the convective top (ceiling) been reached or will the air parcel continue to rise? The pressure of the day is 1017hPa and the relative humidity at 500m AMSL is 50%.
 
 Solution:
 
@@ -96,7 +98,7 @@ console.log('The new temperature of the air parcel at 500m = ', T1, '°C');
 const w1 = velitherm.relativeHumidity(q, P1, T1);
 console.log('Relative humidity after rising to 500m = ', Math.round(w1), '%');
 
-// If the air parcel has reached 100% relative humidity, then there is condensation
+// If the air parcel has reached 100% relative humidity, then there will be condensation
 if (w1 < 100) {
   console.log('No, it did not form a cloud');
 } else {
