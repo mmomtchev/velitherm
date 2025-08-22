@@ -123,6 +123,15 @@ export const K = -273.15;
 
 
 /**
+ * Number of feets in one meter
+ *
+ * @const
+ * @type {number}
+ */
+export const feetPerMeter = 3.28084;
+
+
+/**
  * Altitude from pressure using the barometric formula and ICAO's definition
  * of standard atmosphere.
  *
@@ -437,4 +446,47 @@ export function adiabaticExpansion(
 export function adiabaticCooling(
   temp0: number, pressure: number, pressure0: number = P0): number {
   return (temp0 - K) * Math.pow(pressure / pressure0, (HCR - 1) / HCR) + K;
+}
+
+/**
+ * Convert a Flight Level to pressure
+ *
+ * Flight levels are defined as pressure and not as a fixed
+ * altitude. This means that a flight level can always be converted
+ * to pressure without needing any other information in a fully
+ * deterministic way.
+  * 
+ * A flight level of 115 means 11500 feet measured by barometer
+ * using the ICAO standard atmosphere.
+ * 
+ * The returned pressure can then be converted to altitude using
+ * any of the above functions, taking into account the MSL pressure and
+ * temperature variations.
+ *
+ * @param {number} FL Flight Level
+ * @returns {number}
+ */
+export function pressureFromFL(FL: number): number {
+  return pressureFromStandardAltitude(FL * 100 / feetPerMeter);
+}
+
+/**
+ * Convert pressure to Flight Level.
+ *
+ * Flight levels are defined as pressure and not as a fixed
+ * altitude. This means that a flight level can always be converted
+ * to pressure without needing any other information in a fully
+ * deterministic way.
+  * 
+ * A flight level of 115 means 11500 feet measured by barometer
+ * using the ICAO standard atmosphere.
+ * 
+ * The returned Flight Level can be a fractional number, this should
+ * be rounded to the closest integer as there are no fractional flight levels.
+ *
+ * @param {number} P pressure
+ * @returns {number}
+ */
+export function FLFromPressure(P: number): number {
+  return altitudeFromStandardPressure(P) * feetPerMeter / 100;
 }

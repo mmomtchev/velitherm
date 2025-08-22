@@ -263,4 +263,18 @@ describe('velitherm', () => {
       assert.closeTo(k0, k1, 0.1);
     });
   });
+
+  describe('Flight Levels', () => {
+    it('convert Flight Level to pressure', () => {
+      const pressure = velitherm.pressureFromFL(100);
+
+      assert.closeTo(pressure, 697, 1);
+    });
+
+    it('convert pressure to Flight Level', () => {
+      const pressure = velitherm.FLFromPressure(657);
+
+      assert.closeTo(pressure, 115, 1);
+    });
+  });
 });

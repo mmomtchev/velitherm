@@ -1,5 +1,9 @@
 # Changelog
 
+# [2.0.0]
+ - Add functions for working with flight levels
+ - Improve the C compatibility
+
 ## [1.2.0] 2020-03-18
  - Add C/C++ support
  - Add `adiabaticCooling` and `adiabaticExpansion`
