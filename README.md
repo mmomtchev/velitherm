@@ -234,6 +234,7 @@ npx tsx examples/flightInstrument.ts
 *   [Mv](#mv)
 *   [R](#r)
 *   [K](#k)
+*   [feetPerMeter](#feetpermeter)
 *   [altitudeFromStandardPressure](#altitudefromstandardpressure)
     *   [Parameters](#parameters)
 *   [pressureFromStandardAltitude](#pressurefromstandardaltitude)
@@ -267,6 +268,10 @@ npx tsx examples/flightInstrument.ts
 *   [adiabaticCooling](#adiabaticcooling)
     *   [Parameters](#parameters-15)
     *   [Examples](#examples)
+*   [pressureFromFL](#pressurefromfl)
+    *   [Parameters](#parameters-16)
+*   [FLFromPressure](#flfrompressure)
+    *   [Parameters](#parameters-17)
 
 ## velitherm
 
@@ -364,6 +369,12 @@ Type: [number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Globa
 ## K
 
 Absolute zero in °C
+
+Type: [number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)
+
+## feetPerMeter
+
+Number of feets in one meter
 
 Type: [number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)
 
@@ -652,5 +663,48 @@ const gamma = (15 - velitherm.adiabaticCooling(15,
 // It should be very close to the provided constant
 assert(Math.abs(gamma - velitherm.gamma) < 1e-5)
 ```
+
+Returns **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)**&#x20;
+
+## pressureFromFL
+
+Convert a Flight Level to pressure
+
+Flight levels are defined as pressure and not as a fixed
+altitude. This means that a flight level can always be converted
+to pressure without needing any other information in a fully
+deterministic way.
+
+A flight level of 115 means 11500 feet measured by barometer
+using the ICAO standard atmosphere.
+
+The returned pressure can then be converted to altitude using
+any of the above functions, taking into account the MSL pressure and
+temperature variations.
+
+### Parameters
+
+*   `FL` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** Flight Level
+
+Returns **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)**&#x20;
+
+## FLFromPressure
+
+Convert pressure to Flight Level.
+
+Flight levels are defined as pressure and not as a fixed
+altitude. This means that a flight level can always be converted
+to pressure without needing any other information in a fully
+deterministic way.
+
+A flight level of 115 means 11500 feet measured by barometer
+using the ICAO standard atmosphere.
+
+The returned Flight Level can be a fractional number, this should
+be rounded to the closest integer as there are no fractional flight levels.
+
+### Parameters
+
+*   `P` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** pressure
 
 Returns **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)**&#x20;
