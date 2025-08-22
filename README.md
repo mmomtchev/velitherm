@@ -131,6 +131,8 @@ I know that the surrounding air pressure is 821 hPa. How can I tell what is my c
 
 My local weather information provider tells me that the mean sea level pressure of the day at my location is 1017 hPa. How can I improve the accuracy of my height estimate? And if I know that the temperature at the ground is 23°C? How can I get an even better estimate?
 
+What should I do if I don't have any idea about today's pressure and temperature of the air near the ground? How can I be sure to stay below FL115?
+
 Solution:
 
 ```ts
@@ -177,7 +179,7 @@ Run this example with:
 npx tsx examples/flightInstrument.ts
 ```
 
-*Please note the huge difference between the usual 3505m estimate for FL115 and the actual 3945m altitude for this given day!*
+*Please note the huge difference between the usual 3505m estimate for FL115 and the actual 3945m altitude for this given day or the 3237m during bad winter weather!*
 
 # API
 

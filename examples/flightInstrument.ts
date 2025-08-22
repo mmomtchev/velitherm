@@ -33,3 +33,12 @@ console.log('FL115 means the altitude at which the pressure is', Math.round(pres
 const altitudeFL115 = Math.round(velitherm.altitudeFromPressure(pressureFL115, pressureMSL, temperatureGround));
 console.log('Today FL115 is at', altitudeFL115, 'm');
 console.log('You can climb', altitudeFL115 - alt3, 'm before reaching FL115');
+
+// Get the most pessimistic (lowest) possible estimate for FL115?
+// This is possible only with a minimum pressure and a minimum air temperature at the ground
+// We suppose that we are not flying in winter storm conditions
+// Let's define these as 1000 hPa and -20°C
+// You should never be flying in an ultralight aircraft is pressure is below 1000 hPa
+const altitudeMinFL115 = Math.round(velitherm.altitudeFromPressure(pressureFL115, 1000, -20));
+console.log('FL115 should not be below', altitudeMinFL115, 'm even in bad winter weather');
+console.log('You can climb', altitudeMinFL115 - alt3, 'm before reaching the pessimistic estimate for FL115');
