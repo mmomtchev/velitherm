@@ -196,12 +196,23 @@ describe('velitherm', () => {
   });
 
   describe('adiabaticCooling', () => {
+    const HEIGHT = 100;
+
     it('should come very close to the fixed constant', () => {
       const gamma = (velitherm.T0 -
         velitherm.adiabaticCooling(velitherm.T0,
-          velitherm.pressureFromStandardAltitude(100),
+          velitherm.pressureFromStandardAltitude(HEIGHT),
           velitherm.pressureFromStandardAltitude(0))
-      ) / 100;
+      ) / HEIGHT;
+
+      assert.closeTo(gamma, velitherm.gamma, 1e-5);
+    });
+
+    it('should support being called without ground pressure', () => {
+      const gamma = (velitherm.T0 -
+        velitherm.adiabaticCooling(velitherm.T0,
+          velitherm.pressureFromStandardAltitude(HEIGHT))
+      ) / HEIGHT;
 
       assert.closeTo(gamma, velitherm.gamma, 1e-5);
     });
@@ -216,8 +227,8 @@ describe('velitherm', () => {
       // combined gas law, for a given gas, k should always be constant
       const k0 = velitherm.pressureFromStandardAltitude(0) / (velitherm.T0 + velitherm.K);
       const k1 = expansion *
-          velitherm.pressureFromStandardAltitude(100) /
-          (velitherm.T0 + velitherm.K - velitherm.gamma * 100);
+        velitherm.pressureFromStandardAltitude(100) /
+        (velitherm.T0 + velitherm.K - velitherm.gamma * 100);
 
       assert.closeTo(k0, k1, 0.1);
     });
