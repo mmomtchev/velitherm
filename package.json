@@ -7,7 +7,8 @@
   "types": "./dist/es/index.d.ts",
   "scripts": {
     "test": "mocha",
-    "test:cpp": "g++ -Iinclude -o test/test_cc test/test.cc && test/test_cc",
+    "test:cpp": "c++ -Iinclude -o test/test_cc test/test.cc && test/test_cc",
+    "test:c": "cc -Iinclude -std=c99 -o test/test_c test/test.c -lm && test/test_c",
     "build": "tsc -p tsconfig.cjs.json && tsc -p tsconfig.json && cat src/index.ts | tsx src/gen_cpp.ts > include/velitherm.h",
     "doc": "documentation readme src/index.ts --section=API --parse-extension ts",
     "lint": "eslint src/*.ts test/*.ts",

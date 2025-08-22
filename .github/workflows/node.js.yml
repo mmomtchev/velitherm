@@ -27,6 +27,8 @@ jobs:
     - run: npm ci
     - run: npm run build
     - run: npm test
+    - run: npm run test:cpp
+    - run: npm run test:c
     - run: npx tsx examples/risingAir.ts
     - run: npx tsx examples/flightInstrument.ts
     - run: npm run doc

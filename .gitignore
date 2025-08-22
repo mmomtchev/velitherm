@@ -2,4 +2,5 @@ dist
 node_modules
 coverage
 test/test_cc
+test/test_c
 include/velitherm.h
