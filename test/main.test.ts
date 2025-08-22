@@ -68,7 +68,8 @@ describe('velitherm', () => {
     describe('altitudeFromStandardPressure', () => {
       for (const lvl of standardAtmosphere) {
         it(`Altitude of ${lvl.pres}hPa should be ${lvl.alt}m`, () => {
-          assert.closeTo(velitherm.altitudeFromStandardPressure(lvl.pres), lvl.alt, 1);
+          assert.closeTo(velitherm.altitudeFromStandardPressure(
+            lvl.pres), lvl.alt, 1);
         });
       }
     });
@@ -76,7 +77,8 @@ describe('velitherm', () => {
     describe('pressureFromStandardAltitude', () => {
       for (const lvl of standardAtmosphere) {
         it(`Altitude at ${lvl.pres}hPa should be ${lvl.alt}m`, () => {
-          assert.closeTo(velitherm.pressureFromStandardAltitude(lvl.alt), lvl.pres, 1);
+          assert.closeTo(velitherm.pressureFromStandardAltitude(
+            lvl.alt), lvl.pres, 1);
         });
       }
     });
@@ -85,66 +87,88 @@ describe('velitherm', () => {
   describe('Hypsometric equation', () => {
     describe('altitudeFromPressure', () => {
       for (const lvl of realAtmosphere) {
-        it(`(QFF=${lvl.pres0}hPa, T=${lvl.t}°C) Altitude of ${lvl.pres}hPa should be ${lvl.alt}m`, () => {
-          assert.closeTo(velitherm.altitudeFromPressure(lvl.pres, lvl.pres0, lvl.t), lvl.alt, 5);
-        });
+        it(`(QFF=${lvl.pres0}hPa, T=${lvl.t}°C)` +
+          ` Altitude of ${lvl.pres}hPa should be ${lvl.alt}m`, () => {
+            assert.closeTo(velitherm.altitudeFromPressure(
+              lvl.pres, lvl.pres0, lvl.t), lvl.alt, 5);
+          });
       }
-      it(`(QFF=${velitherm.P0}hPa, T=${velitherm.T0}°C) Altitude of ${velitherm.P0}hPa should be 0m`, () => {
-        assert.closeTo(velitherm.altitudeFromPressure(velitherm.P0), 0, 5);
-      });
+      it(`(QFF=${velitherm.P0}hPa, ` +
+        `T=${velitherm.T0}°C) Altitude of ${velitherm.P0}hPa should be 0m`,
+        () => {
+          assert.closeTo(velitherm.altitudeFromPressure(velitherm.P0), 0, 5);
+        });
     });
 
     describe('pressureFromAltitude', () => {
       for (const lvl of realAtmosphere) {
-        it(`(QFF=${lvl.pres0}hPa, T=${lvl.t}°C) Altitude at ${lvl.pres}hPa should be ${lvl.alt}m`, () => {
-          assert.closeTo(velitherm.pressureFromAltitude(lvl.alt, lvl.pres0, lvl.t), lvl.pres, 1);
-        });
+        it(`(QFF=${lvl.pres0}hPa, ` +
+          `T=${lvl.t}°C) Altitude at ${lvl.pres}hPa should be ${lvl.alt}m`,
+          () => {
+            assert.closeTo(
+              velitherm.pressureFromAltitude(
+                lvl.alt, lvl.pres0, lvl.t), lvl.pres, 1);
+          });
       }
-      it(`(QFF=${velitherm.P0}hPa, T=${velitherm.T0}°C) Altitude at ${velitherm.P0}hPa should be 0m`, () => {
-        assert.closeTo(velitherm.pressureFromAltitude(0), velitherm.P0, 1);
-      });
+      it(`(QFF=${velitherm.P0}hPa, ` +
+        `T=${velitherm.T0}°C) Altitude at ${velitherm.P0}hPa should be 0m`,
+        () => {
+          assert.closeTo(velitherm.pressureFromAltitude(0), velitherm.P0, 1);
+        });
     });
   });
 
   describe('waterVaporSaturationPressure', () => {
     for (const lvl of waterVaporSaturationPressure) {
-      it(`Water Vapor (Saturation) Pressure at ${lvl.t}°C should be ${lvl.Preal}hPa`, () => {
-        assert.closeTo(velitherm.waterVaporSaturationPressure(lvl.t), lvl.Ptetens, 0.1);
-        assert.closeTo(velitherm.waterVaporSaturationPressure(lvl.t), lvl.Preal, 1);
-      });
+      it(`Water Vapor (Saturation) Pressure at ${lvl.t}°C ` +
+        `should be ${lvl.Preal}hPa`, () => {
+          assert.closeTo(velitherm.waterVaporSaturationPressure(
+            lvl.t), lvl.Ptetens, 0.1);
+          assert.closeTo(velitherm.waterVaporSaturationPressure(
+            lvl.t), lvl.Preal, 1);
+        });
     }
-    it(`Water Vapor (Saturation) Pressure at ${velitherm.T0}°C should be ${17.0529}hPa`, () => {
-      assert.closeTo(velitherm.waterVaporSaturationPressure(), 17.0529, 0.1);
-    });
+    it(`Water Vapor (Saturation) Pressure at ${velitherm.T0}°C ` +
+      `should be ${17.0529}hPa`, () => {
+        assert.closeTo(velitherm.waterVaporSaturationPressure(), 17.0529, 0.1);
+      });
   });
 
   describe('Humidity', () => {
     describe('specificHumidity', () => {
       for (const lvl of humidity) {
-        it(`RH=${lvl.h}%, P=${lvl.p}hPa, T=${lvl.t}°C => q=${lvl.q}g/kg`, () => {
-          assert.closeTo(velitherm.specificHumidity(lvl.h, lvl.p, lvl.t), lvl.q, 1e-1);
-        });
+        it(`RH=${lvl.h}%, P=${lvl.p}hPa, T=${lvl.t}°C ` +
+          `=> q=${lvl.q}g/kg`, () => {
+            assert.closeTo(velitherm.specificHumidity(
+              lvl.h, lvl.p, lvl.t), lvl.q, 1e-1);
+          });
       }
     });
 
     describe('mixingRatio', () => {
       for (const lvl of humidity) {
-        it(`RH=${lvl.h}%, P=${lvl.p}hPa, T=${lvl.t}°C => w=${lvl.w}g/kg`, () => {
-          assert.closeTo(velitherm.mixingRatio(velitherm.specificHumidity(lvl.h, lvl.p, lvl.t)), lvl.w, 1e-1);
-        });
+        it(`RH=${lvl.h}%, P=${lvl.p}hPa, T=${lvl.t}°C => ` +
+          `w=${lvl.w}g/kg`, () => {
+            assert.closeTo(velitherm.mixingRatio(velitherm.specificHumidity(
+              lvl.h, lvl.p, lvl.t)), lvl.w, 1e-1);
+          });
       }
       for (const lvl of humidity) {
-        it(`RH=${lvl.h}%, P=${lvl.p}hPa, T=${lvl.t}°C => q=${lvl.q}g/kg`, () => {
-          assert.closeTo(velitherm.specificHumidityFromMixingRatio(lvl.w), lvl.q, 1e-1);
-        });
+        it(`RH=${lvl.h}%, P=${lvl.p}hPa, T=${lvl.t}°C => ` +
+          `q=${lvl.q}g/kg`, () => {
+            assert.closeTo(velitherm.specificHumidityFromMixingRatio(
+              lvl.w), lvl.q, 1e-1);
+          });
       }
     });
 
     describe('relativeHumidity', () => {
       for (const lvl of humidity) {
-        it(`q=${lvl.q}g/kg, P=${lvl.p}hPa, T=${lvl.t}°C => RH=${lvl.h}%`, () => {
-          assert.closeTo(velitherm.relativeHumidity(lvl.q, lvl.p, lvl.t), lvl.h, 2);
-        });
+        it(`q=${lvl.q}g/kg, P=${lvl.p}hPa, T=${lvl.t}°C => ` +
+          `RH=${lvl.h}%`, () => {
+            assert.closeTo(velitherm.relativeHumidity(
+              lvl.q, lvl.p, lvl.t), lvl.h, 2);
+          });
       }
     });
 
@@ -159,7 +183,8 @@ describe('velitherm', () => {
     describe('relativeHumidityFromDewPoint', () => {
       for (const lvl of humidity) {
         it(`Td=${lvl.td}°C, T=${lvl.t}°C => RH=${lvl.h}%`, () => {
-          assert.closeTo(velitherm.relativeHumidityFromDewPoint(lvl.td, lvl.t), lvl.h, 1);
+          assert.closeTo(velitherm.relativeHumidityFromDewPoint(
+            lvl.td, lvl.t), lvl.h, 1);
         });
       }
     });
@@ -167,15 +192,19 @@ describe('velitherm', () => {
 
   describe('airDensity', () => {
     for (const lvl of dryAir) {
-      it(`Dry air, sea level, ${lvl.t}°C => rho = ${lvl.rho}kg/m3`, () => {
-        assert.closeTo(velitherm.airDensity(0, velitherm.P0, lvl.t), lvl.rho, 1e-3);
-      });
+      it(`Dry air, sea level, ${lvl.t}°C ` +
+        `=> rho = ${lvl.rho}kg/m3`, () => {
+          assert.closeTo(velitherm.airDensity(
+            0, velitherm.P0, lvl.t), lvl.rho, 1e-3);
+        });
     }
 
     for (const lvl of humidAir) {
-      it(`Humid air ${lvl.h}%, ${lvl.p}hPa, ${lvl.t}°C => rho = ${lvl.rho}kg/m3`, () => {
-        assert.closeTo(velitherm.airDensity(lvl.h, lvl.p, lvl.t), lvl.rho, 1e-2);
-      });
+      it(`Humid air ${lvl.h}%, ${lvl.p}hPa, ${lvl.t}°C => ` +
+        `rho = ${lvl.rho}kg/m3`, () => {
+          assert.closeTo(velitherm.airDensity(
+            lvl.h, lvl.p, lvl.t), lvl.rho, 1e-2);
+        });
     }
   });
 
@@ -225,7 +254,8 @@ describe('velitherm', () => {
         velitherm.pressureFromStandardAltitude(0));
 
       // combined gas law, for a given gas, k should always be constant
-      const k0 = velitherm.pressureFromStandardAltitude(0) / (velitherm.T0 + velitherm.K);
+      const k0 = velitherm.pressureFromStandardAltitude(0) /
+        (velitherm.T0 + velitherm.K);
       const k1 = expansion *
         velitherm.pressureFromStandardAltitude(100) /
         (velitherm.T0 + velitherm.K - velitherm.gamma * 100);
