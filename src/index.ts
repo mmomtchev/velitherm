@@ -5,7 +5,8 @@
  *
  * Licensed under the LGPL License, Version 3.0 (the "License")
  * You may not use this file except in compliance with the License.
- * You may obtain a copy of the License at: https://www.gnu.org/licenses/lgpl-3.0.en.html
+ * You may obtain a copy of the License at:
+ * https://www.gnu.org/licenses/lgpl-3.0.en.html
  *
  * All methods use:
  *
@@ -122,69 +123,86 @@ export const K = -273.15;
 
 
 /**
- * Altitude from pressure using the barometric formula and ICAO's definition of standard atmosphere.
+ * Altitude from pressure using the barometric formula and ICAO's definition
+ * of standard atmosphere.
  *
- * This is a very rough approximation that is an ICAO standard. It is used when calculating QNH.
+ * This is a very rough approximation that is an ICAO standard.
+ * It is used when calculating QNH.
  * It does not take into account the pressure and temperature of the day.
  *
  * @param {number} pressure Pressure
  * @param {number} [pressure0] Optional sea-level pressure of the day
  * @returns {number}
  */
-export function altitudeFromStandardPressure(pressure: number, pressure0: number = P0): number {
+export function altitudeFromStandardPressure(
+  pressure: number, pressure0: number = P0): number {
   return 44330.0 * (1.0 - Math.pow(pressure / pressure0, 1 / 5.255));
 }
 
 /**
- * Pressure from altitude using the barometric formula and ICAO's definition of standard atmosphere.
+ * Pressure from altitude using the barometric formula and ICAO's definition
+ * of standard atmosphere.
  *
- * This is a very rough approximation that is an ICAO standard. It is used when calculating QNH.
+ * This is a very rough approximation that is an ICAO standard. It is used
+ * when calculating QNH.
  * It does not take into account the pressure and temperature of the day.
  *
  * @param {number} height Height
  * @param {number} [pressure0] Optional sea-level pressure of the day
  * @returns {number}
  */
-export function pressureFromStandardAltitude(height: number, pressure0: number = P0): number {
+export function pressureFromStandardAltitude(
+  height: number, pressure0: number = P0): number {
   return pressure0 * Math.pow(1 - height / 44330.0, 5.255);
 }
 
 /**
  * Altitude from pressure using the hypsometric formula.
  *
- * This is a better equation that takes into account the pressure and the temperature of the day.
- * It is not a standard and different weather institutions use slightly different parameters.
+ * This is a better equation that takes into account the pressure and the
+ * temperature of the day.
+ * It is not a standard and different weather institutions use slightly
+ * different parameters.
  * It is used when calculating the QFF.
  *
  * @param {number} pressure Pressure
  * @param {number} [pressure0] Optional sea-level pressure of the day
- * @param {number} [temp] Optional average temperature from the ground to the given level
+ * @param {number} [temp] Optional average temperature from the ground
+ *                        to the given level
  * @returns {number}
  */
-export function altitudeFromPressure(pressure: number, pressure0: number = P0, temp: number = T0): number {
-  return (Math.pow(pressure0 / pressure, 1.0 / 5.257) - 1) * (temp - K) / 0.0065;
+export function altitudeFromPressure(
+  pressure: number, pressure0: number = P0, temp: number = T0): number {
+  return (Math.pow(pressure0 / pressure, 1.0 / 5.257) - 1) * (temp - K) /
+    0.0065;
 }
 
 /**
  * Pressure from altitude using the hypsometric formula.
  *
- * This is a better equation that takes into account the pressure and the temperature of the day.
- * It is not a standard and different weather institutions use slightly different parameters.
+ * This is a better equation that takes into account the pressure and
+ * the temperature of the day.
+ * It is not a standard and different weather institutions use slightly
+ * different parameters.
  * It is used when calculating the QFF.
  *
  * @param {number} height Height
  * @param {number} [pressure0] Optional sea-level pressure of the day
- * @param {number} [temp] Optional average temperature from the ground to the given level
+ * @param {number} [temp] Optional average temperature from the ground
+ *                        to the given level
  * @returns {number}
  */
-export function pressureFromAltitude(height: number, pressure0: number = P0, temp: number = T0): number {
-  return pressure0 * Math.pow(1.0 - 0.0065 * height / (temp - K + 0.0065 * height), 5.257);
+export function pressureFromAltitude(
+  height: number, pressure0: number = P0, temp: number = T0): number {
+  return pressure0 *
+    Math.pow(1.0 - 0.0065 * height / (temp - K + 0.0065 * height), 5.257);
 }
 
 /**
  * (Saturation) Water vapor pressure.
  *
- * Clausius–Clapeyron equation - the most fundamental equation in weather science.
+ * Clausius–Clapeyron equation - the most fundamental equation in weather
+ * science.
  *
  * This is the Magnus-Tetens approximation.
  *
@@ -205,8 +223,10 @@ export function waterVaporSaturationPressure(temp: number = T0): number {
  * @param {number} [temp] Optional temperature
  * @returns {number}
  */
-export function relativeHumidity(specificHumidity: number, pressure: number = P0, temp: number = T0): number {
-  return specificHumidity / (6.22 * waterVaporSaturationPressure(temp) / pressure);
+export function relativeHumidity(
+  specificHumidity: number, pressure: number = P0, temp: number = T0): number {
+  return specificHumidity / (6.22 * waterVaporSaturationPressure(temp) /
+    pressure);
 }
 
 const Sonntag_1990_b = 17.62;
@@ -221,7 +241,8 @@ const Sonntag_1990_c = 243.12;
  * @returns {number}
  */
 export function dewPoint(relativeHumidity: number, temp: number = T0): number {
-  const gamma = Math.log(relativeHumidity / 100) + Sonntag_1990_b * temp / (Sonntag_1990_c + temp);
+  const gamma = Math.log(relativeHumidity / 100) + Sonntag_1990_b * temp /
+    (Sonntag_1990_c + temp);
 
   return Sonntag_1990_c * gamma / (Sonntag_1990_b - gamma);
 }
@@ -235,10 +256,12 @@ export function dewPoint(relativeHumidity: number, temp: number = T0): number {
  * @param {number} [temp] Optional temperature
  * @returns {number}
  */
-export function relativeHumidityFromDewPoint(dewPoint: number, temp: number = T0): number {
+export function relativeHumidityFromDewPoint(
+  dewPoint: number, temp: number = T0): number {
   const gamma = dewPoint * Sonntag_1990_b / (dewPoint + Sonntag_1990_c);
 
-  return Math.exp(gamma - Sonntag_1990_b * temp / (Sonntag_1990_c + temp)) * 100;
+  return Math.exp(gamma - Sonntag_1990_b * temp /
+    (Sonntag_1990_c + temp)) * 100;
 }
 
 /**
@@ -275,8 +298,10 @@ export function specificHumidityFromMixingRatio(mixingRatio: number) {
  * @param {number} [temp] Optional temperature
  * @returns {number}
  */
-export function specificHumidity(relativeHumidity: number, pressure: number = P0, temp: number = T0): number {
-  return relativeHumidity / 100 * (0.622 * waterVaporSaturationPressure(temp) / pressure) * 1000;
+export function specificHumidity(
+  relativeHumidity: number, pressure: number = P0, temp: number = T0): number {
+  return relativeHumidity / 100 *
+    (0.622 * waterVaporSaturationPressure(temp) / pressure) * 1000;
 }
 
 /**
@@ -289,7 +314,8 @@ export function specificHumidity(relativeHumidity: number, pressure: number = P0
  * @param {number} [temp] Optional temperature
  * @returns {number}
  */
-export function airDensity(relativeHumidity: number, pressure: number = P0, temp: number = T0): number {
+export function airDensity(
+  relativeHumidity: number, pressure: number = P0, temp: number = T0): number {
   const Psat = waterVaporSaturationPressure(temp);
   const Pv = relativeHumidity / 100 * Psat;
   const Pd = pressure - Pv;
@@ -300,9 +326,11 @@ export function airDensity(relativeHumidity: number, pressure: number = P0, temp
 /**
  * Lifted Condensation Level.
  *
- * This is the altitude at which a mechanically lifted air parcel from the ground will condensate.
+ * This is the altitude at which a mechanically lifted air parcel from
+ * the ground will condensate.
  *
- * It corresponds to the cloud base level when the clouds are formed by mechanical lifting.
+ * It corresponds to the cloud base level when the clouds are formed by
+ * mechanical lifting.
  *
  * This approximation is known as the Espy equation with the Stull coefficient.
  *
@@ -317,9 +345,11 @@ export function LCL(temp: number, dewPoint: number) {
 /**
  * Moist adiabatic lapse rate from pressure and temperature.
  *
- * Copied from Roland Stull, Practical Meteorology (copylefted, available online).
+ * Copied from Roland Stull, Practical Meteorology
+ * (copylefted, available online).
  *
- * Rather complex approximation based on the Magnus-Tetens equation and the barometric equation.
+ * Rather complex approximation based on the Magnus-Tetens equation and
+ * the barometric equation.
  *
  * @param {number} temp Temperature
  * @param {number} [pressure] Optional pressure
@@ -338,13 +368,15 @@ const HCR = 1.4;
 /**
  * Adiabatic expansion rate from pressure change rate.
  *
- * This equation allows to calculate the expansion ratio of an air parcel from the
- * the previous pressure and the new pressure.
+ * This equation allows to calculate the expansion ratio of an air parcel
+ * from the the previous pressure and the new pressure.
  *
- * An adiabatic expansion is an isentropic process that is governed by the Ideal gas law
- * in general and the constant entropy relationship in particular:
+ * An adiabatic expansion is an isentropic process that is governed by
+ * the Ideal gas law in general and the constant entropy relationship in
+ * particular:
  * (P / P0) = (V / V0) ^ gamma
- * Where P=pressure, V=volume, gamma=heat capacity ratio (1.4 for air, a diatomic gas)
+ * Where P=pressure, V=volume, gamma=heat capacity ratio (1.4 for air,
+ * a diatomic gas)
  *
  * Analytic equation.
  *
@@ -353,7 +385,8 @@ const HCR = 1.4;
  * @param {number} pressure0 Old pressure
  * @returns {number}
  */
-export function adiabaticExpansion(volume0: number, pressure: number, pressure0: number = P0): number {
+export function adiabaticExpansion(
+  volume0: number, pressure: number, pressure0: number = P0): number {
   return volume0 * Math.pow(pressure0 / pressure, 1 / HCR);
 }
 
@@ -366,16 +399,18 @@ export function adiabaticExpansion(volume0: number, pressure: number, pressure0:
  * It is by combining this equation with the barometric equation
  * that the adiabatic lapse rate of dry air can be obtained.
  *
- * An adiabatic expansion is an isentropic process that is governed by the Ideal gas law
- * in general and the constant entropy relationship in particular:
+ * An adiabatic expansion is an isentropic process that is governed by
+ * the Ideal gas law in general and the constant entropy relationship
+ * in particular:
  * (P / P0) = (V / V0) ^ gamma
- * Where P=pressure, V=volume, gamma=heat capacity ratio (1.4 for air, a diatomic gas)
+ * Where P=pressure, V=volume, gamma=heat capacity ratio (1.4 for air,
+ * a diatomic gas)
  *
- * Keep in mind that if you intend to use this method to calculate a rate relative
- * to height in meters, you will need very precise altitude calculations for good
- * results. As the dry adiabatic rate is a constant that does not depend on the
- * temperature or the pressure, most of the time you will be better off simply
- * using the `gamma` constant.
+ * Keep in mind that if you intend to use this method to calculate a rate
+ * relative to height in meters, you will need very precise altitude
+ * calculations for good results. As the dry adiabatic rate is a constant
+ * that does not depend on the temperature or the pressure, most of the time
+ * you will be better off simply using the `gamma` constant.
  *
  * https://en.wikipedia.org/wiki/Ideal_gas_law contains a very good
  * introduction to this subject.
@@ -399,6 +434,7 @@ export function adiabaticExpansion(volume0: number, pressure: number, pressure0:
  * @param {number} pressure0 Old pressure
  * @returns {number}
  */
-export function adiabaticCooling(temp0: number, pressure: number, pressure0: number = P0): number {
+export function adiabaticCooling(
+  temp0: number, pressure: number, pressure0: number = P0): number {
   return (temp0 - K) * Math.pow(pressure / pressure0, (HCR - 1) / HCR) + K;
 }
