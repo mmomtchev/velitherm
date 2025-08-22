@@ -16,7 +16,7 @@ const compat = new FlatCompat({
   allConfig: js.configs.all
 });
 
-export default defineConfig([ globalIgnores([ 'dist/*', '**/*.js' ]), {
+export default defineConfig([globalIgnores(['dist/*', '**/*.js']), {
   extends: compat.extends(
     'eslint:recommended',
     'plugin:@typescript-eslint/eslint-recommended',
@@ -37,5 +37,10 @@ export default defineConfig([ globalIgnores([ 'dist/*', '**/*.js' ]), {
     parser: tsParser,
     ecmaVersion: 2017,
     sourceType: 'module'
+  },
+
+  rules: {
+    'max-len': ['error', { 'code': 80 }],
+    quotes: ['error', 'single']
   }
-} ]);
+}]);

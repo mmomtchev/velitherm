@@ -86,7 +86,7 @@ import * as velitherm from 'velitherm';
 // When the air rises, its specific humidity remains constant
 const q = velitherm.specificHumidity(75, 1017, 25);
 console.log('Specific humidity = ', Math.round(q), 'g/kg');
-console.log('Dew point = ', velitherm.dewPoint(75, 25));
+console.log('Dew point = ', velitherm.dewPoint(75, 25).toFixed(2), '°C');
 
 // Find the current pressure at 500m AMSL
 const P1 = velitherm.pressureFromAltitude(500, 1017, 25);
@@ -96,11 +96,13 @@ console.log('Pressure at 500m = ', Math.round(P1), 'hPa');
 const T1 = 25 - 500 * velitherm.gamma;
 console.log('The new temperature of the air parcel at 500m = ', T1, '°C');
 
-// Compute the new relative humidity of the air parcel at this pressure and temperature
+// Compute the new relative humidity of the air parcel at this pressure and
+// temperature
 const w1 = velitherm.relativeHumidity(q, P1, T1);
 console.log('Relative humidity after rising to 500m = ', Math.round(w1), '%');
 
-// If the air parcel has reached 100% relative humidity, then there will be condensation
+// If the air parcel has reached 100% relative humidity, then there is
+// condensation
 if (w1 < 100) {
   console.log('No, it did not form a cloud');
 } else {
@@ -119,6 +121,7 @@ if (rhoParcel < rhoAir500) {
 ```
 
 You can run the example program with
+
 ```shell
 npx tsx examples/risingAir.ts
 ```
@@ -129,7 +132,7 @@ npx tsx examples/risingAir.ts
 
 I know that the surrounding air pressure is 821 hPa. How can I tell what is my current altitude? How can I tell what is my current flight level and how far I am from FL115?
 
-My local weather information provider tells me that the mean sea level pressure of the day at my location is 1017 hPa. How can I improve the accuracy of my height estimate? And if I know that the temperature at the ground is 23°C? How can I get an even better estimate?
+My local weather information provider tells me that the mean sea level pressure of the day at my location is 1017 hPa. How can I improve the accuracy of my height estimate? And if I know that the mean temperature of the air below me is 23°C? How can I get an even better estimate?
 
 What should I do if I don't have any idea about today's pressure and temperature of the air near the ground? How can I be sure to stay below FL115?
 
@@ -140,21 +143,24 @@ import * as velitherm from 'velitherm';
 
 const barometerInput = 821;
 const pressureMSL = 1017;
-const temperatureGround = 23;
+const temperatureBelow = 23;
 
 const feetPerMeter = 3.28084;
 
 // Rough estimate of the height using only the pressure
 // We round it to 50m because it is a rough estimate
-const alt = Math.round(velitherm.altitudeFromStandardPressure(barometerInput) / 50) * 50;
+const alt = Math.round(velitherm.altitudeFromStandardPressure(barometerInput) /
+  50) * 50;
 console.log('Rough estimate of the altitude is', alt, 'm');
 
 // Better estimate of the height using the ground pressure
-const alt2 = Math.round(velitherm.altitudeFromPressure(barometerInput, pressureMSL));
+const alt2 = Math.round(velitherm.altitudeFromPressure(barometerInput,
+  pressureMSL));
 console.log('Better estimate of the altitude is', alt2, 'm');
 
 // Even better estimate of the height using the temperature
-const alt3 = Math.round(velitherm.altitudeFromPressure(barometerInput, pressureMSL, temperatureGround));
+const alt3 = Math.round(velitherm.altitudeFromPressure(barometerInput,
+  pressureMSL, temperatureBelow));
 console.log('Even better estimate of the altitude is', alt3, 'm');
 
 // Flight levels are in pressure-feet, so we do not need
@@ -163,23 +169,31 @@ const fl = Math.round((alt * feetPerMeter) / 100);
 console.log('The current closest flight level is FL', fl);
 
 // What is the current altitude for FL115?
-// FL115 means 11500 feet measured at pressure at standard atmospheric conditions
-const pressureFL115 = velitherm.pressureFromStandardAltitude(115 * 100 / feetPerMeter);
-console.log('FL115 means the altitude at which the pressure is', Math.round(pressureFL115), 'hPa');
+// FL115 means 11500 feet measured at pressure at standard atmospheric
+// conditions
+const pressureFL115 = velitherm.pressureFromStandardAltitude(
+  115 * 100 / feetPerMeter);
+console.log('FL115 means the altitude at which the pressure is',
+  Math.round(pressureFL115), 'hPa');
 
 // Get the actual altitude for today
-const altitudeFL115 = Math.round(velitherm.altitudeFromPressure(pressureFL115, pressureMSL, temperatureGround));
+const altitudeFL115 = Math.round(velitherm.altitudeFromPressure(
+  pressureFL115, pressureMSL, temperatureBelow));
 console.log('Today FL115 is at', altitudeFL115, 'm');
 console.log('You can climb', altitudeFL115 - alt3, 'm before reaching FL115');
 
 // Get the most pessimistic (lowest) possible estimate for FL115?
-// This is possible only with a minimum pressure and a minimum air temperature at the ground
+// This is possible only with a minimum pressure and a minimum air temperature
 // We suppose that we are not flying in winter storm conditions
 // Let's define these as 1000 hPa and -20°C
-// You should never be flying in an ultralight aircraft is pressure is below 1000 hPa
-const altitudeMinFL115 = Math.round(velitherm.altitudeFromPressure(pressureFL115, 1000, -20));
-console.log('FL115 should not be below', altitudeMinFL115, 'm even in bad winter weather');
-console.log('You can climb', altitudeMinFL115 - alt3, 'm before reaching the pessimistic estimate for FL115');
+// You should never be flying in an ultralight aircraft is pressure
+// is below 1000 hPa
+const altitudeMinFL115 = Math.round(velitherm.altitudeFromPressure(
+  pressureFL115, 1000, -20));
+console.log('FL115 should not be below', altitudeMinFL115,
+  'm even in bad winter weather');
+console.log('You can climb', altitudeMinFL115 - alt3,
+  'm before reaching the pessimistic estimate for FL115');
 ```
 
 Run this example with:
@@ -251,7 +265,8 @@ Copyright © 2022 Momtchil Momtchev <momtchil@momtchev.com>
 
 Licensed under the LGPL License, Version 3.0 (the "License")
 You may not use this file except in compliance with the License.
-You may obtain a copy of the License at: <https://www.gnu.org/licenses/lgpl-3.0.en.html>
+You may obtain a copy of the License at:
+<https://www.gnu.org/licenses/lgpl-3.0.en.html>
 
 All methods use:
 
@@ -343,9 +358,11 @@ Type: [number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Globa
 
 ## altitudeFromStandardPressure
 
-Altitude from pressure using the barometric formula and ICAO's definition of standard atmosphere.
+Altitude from pressure using the barometric formula and ICAO's definition
+of standard atmosphere.
 
-This is a very rough approximation that is an ICAO standard. It is used when calculating QNH.
+This is a very rough approximation that is an ICAO standard.
+It is used when calculating QNH.
 It does not take into account the pressure and temperature of the day.
 
 ### Parameters
@@ -353,13 +370,15 @@ It does not take into account the pressure and temperature of the day.
 *   `pressure` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** Pressure
 *   `pressure0` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)?** Optional sea-level pressure of the day (optional, default `P0`)
 
-Returns **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** 
+Returns **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)**&#x20;
 
 ## pressureFromStandardAltitude
 
-Pressure from altitude using the barometric formula and ICAO's definition of standard atmosphere.
+Pressure from altitude using the barometric formula and ICAO's definition
+of standard atmosphere.
 
-This is a very rough approximation that is an ICAO standard. It is used when calculating QNH.
+This is a very rough approximation that is an ICAO standard. It is used
+when calculating QNH.
 It does not take into account the pressure and temperature of the day.
 
 ### Parameters
@@ -367,45 +386,52 @@ It does not take into account the pressure and temperature of the day.
 *   `height` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** Height
 *   `pressure0` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)?** Optional sea-level pressure of the day (optional, default `P0`)
 
-Returns **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** 
+Returns **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)**&#x20;
 
 ## altitudeFromPressure
 
 Altitude from pressure using the hypsometric formula.
 
-This is a better equation that takes into account the pressure and the temperature of the day.
-It is not a standard and different weather institutions use slightly different parameters.
+This is a better equation that takes into account the pressure and the
+temperature of the day.
+It is not a standard and different weather institutions use slightly
+different parameters.
 It is used when calculating the QFF.
 
 ### Parameters
 
 *   `pressure` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** Pressure
 *   `pressure0` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)?** Optional sea-level pressure of the day (optional, default `P0`)
-*   `temp` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)?** Optional average temperature from the ground to the given level (optional, default `T0`)
+*   `temp` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)?** Optional average temperature from the ground
+    to the given level (optional, default `T0`)
 
-Returns **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** 
+Returns **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)**&#x20;
 
 ## pressureFromAltitude
 
 Pressure from altitude using the hypsometric formula.
 
-This is a better equation that takes into account the pressure and the temperature of the day.
-It is not a standard and different weather institutions use slightly different parameters.
+This is a better equation that takes into account the pressure and
+the temperature of the day.
+It is not a standard and different weather institutions use slightly
+different parameters.
 It is used when calculating the QFF.
 
 ### Parameters
 
 *   `height` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** Height
 *   `pressure0` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)?** Optional sea-level pressure of the day (optional, default `P0`)
-*   `temp` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)?** Optional average temperature from the ground to the given level (optional, default `T0`)
+*   `temp` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)?** Optional average temperature from the ground
+    to the given level (optional, default `T0`)
 
-Returns **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** 
+Returns **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)**&#x20;
 
 ## waterVaporSaturationPressure
 
 (Saturation) Water vapor pressure.
 
-Clausius–Clapeyron equation - the most fundamental equation in weather science.
+Clausius–Clapeyron equation - the most fundamental equation in weather
+science.
 
 This is the Magnus-Tetens approximation.
 
@@ -413,7 +439,7 @@ This is the Magnus-Tetens approximation.
 
 *   `temp` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** Temperature (optional, default `T0`)
 
-Returns **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** 
+Returns **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)**&#x20;
 
 ## relativeHumidity
 
@@ -427,7 +453,7 @@ This is from the Magnus-Tetens approximation.
 *   `pressure` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)?** Optional pressure (optional, default `P0`)
 *   `temp` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)?** Optional temperature (optional, default `T0`)
 
-Returns **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** 
+Returns **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)**&#x20;
 
 ## dewPoint
 
@@ -440,7 +466,7 @@ Approximation of the Magnus equation with the Sonntag 1990 coefficients.
 *   `relativeHumidity` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** Relative humidity
 *   `temp` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)?** Optional temperature (optional, default `T0`)
 
-Returns **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** 
+Returns **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)**&#x20;
 
 ## relativeHumidityFromDewPoint
 
@@ -453,7 +479,7 @@ Approximation of the Magnus equation with the Sonntag 1990 coefficients.
 *   `dewPoint` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** Relative humidity
 *   `temp` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)?** Optional temperature (optional, default `T0`)
 
-Returns **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** 
+Returns **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)**&#x20;
 
 ## mixingRatio
 
@@ -465,7 +491,7 @@ Analytic equation from the definition.
 
 *   `specificHumidity` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** Specific humidity
 
-Returns **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** 
+Returns **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)**&#x20;
 
 ## specificHumidityFromMixingRatio
 
@@ -477,7 +503,7 @@ Analytic equation from the definition.
 
 *   `mixingRatio` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** Mixing ratio
 
-Returns **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** 
+Returns **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)**&#x20;
 
 ## specificHumidity
 
@@ -491,7 +517,7 @@ Approximation of the Magnus equation with the Sonntag 1990 coefficients.
 *   `pressure` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)?** Optional pressure (optional, default `P0`)
 *   `temp` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)?** Optional temperature (optional, default `T0`)
 
-Returns **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** 
+Returns **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)**&#x20;
 
 ## airDensity
 
@@ -505,15 +531,17 @@ Analytic equation from Avogadro's Law.
 *   `pressure` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)?** Optional pressure (optional, default `P0`)
 *   `temp` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)?** Optional temperature (optional, default `T0`)
 
-Returns **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** 
+Returns **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)**&#x20;
 
 ## LCL
 
 Lifted Condensation Level.
 
-This is the altitude at which a mechanically lifted air parcel from the ground will condensate.
+This is the altitude at which a mechanically lifted air parcel from
+the ground will condensate.
 
-It corresponds to the cloud base level when the clouds are formed by mechanical lifting.
+It corresponds to the cloud base level when the clouds are formed by
+mechanical lifting.
 
 This approximation is known as the Espy equation with the Stull coefficient.
 
@@ -522,34 +550,38 @@ This approximation is known as the Espy equation with the Stull coefficient.
 *   `temp` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** Temperature at 2m
 *   `dewPoint` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** Dew point at 2m
 
-Returns **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** 
+Returns **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)**&#x20;
 
 ## gammaMoist
 
 Moist adiabatic lapse rate from pressure and temperature.
 
-Copied from Roland Stull, Practical Meteorology (copylefted, available online).
+Copied from Roland Stull, Practical Meteorology
+(copylefted, available online).
 
-Rather complex approximation based on the Magnus-Tetens equation and the barometric equation.
+Rather complex approximation based on the Magnus-Tetens equation and
+the barometric equation.
 
 ### Parameters
 
 *   `temp` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** Temperature
 *   `pressure` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)?** Optional pressure (optional, default `P0`)
 
-Returns **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** 
+Returns **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)**&#x20;
 
 ## adiabaticExpansion
 
 Adiabatic expansion rate from pressure change rate.
 
-This equation allows to calculate the expansion ratio of an air parcel from the
-the previous pressure and the new pressure.
+This equation allows to calculate the expansion ratio of an air parcel
+from the the previous pressure and the new pressure.
 
-An adiabatic expansion is an isentropic process that is governed by the Ideal gas law
-in general and the constant entropy relationship in particular:
+An adiabatic expansion is an isentropic process that is governed by
+the Ideal gas law in general and the constant entropy relationship in
+particular:
 (P / P0) = (V / V0) ^ gamma
-Where P=pressure, V=volume, gamma=heat capacity ratio (1.4 for air, a diatomic gas)
+Where P=pressure, V=volume, gamma=heat capacity ratio (1.4 for air,
+a diatomic gas)
 
 Analytic equation.
 
@@ -559,7 +591,7 @@ Analytic equation.
 *   `pressure` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** New pressure
 *   `pressure0` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** Old pressure (optional, default `P0`)
 
-Returns **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** 
+Returns **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)**&#x20;
 
 ## adiabaticCooling
 
@@ -571,16 +603,18 @@ the previous pressure and the new pressure.
 It is by combining this equation with the barometric equation
 that the adiabatic lapse rate of dry air can be obtained.
 
-An adiabatic expansion is an isentropic process that is governed by the Ideal gas law
-in general and the constant entropy relationship in particular:
+An adiabatic expansion is an isentropic process that is governed by
+the Ideal gas law in general and the constant entropy relationship
+in particular:
 (P / P0) = (V / V0) ^ gamma
-Where P=pressure, V=volume, gamma=heat capacity ratio (1.4 for air, a diatomic gas)
+Where P=pressure, V=volume, gamma=heat capacity ratio (1.4 for air,
+a diatomic gas)
 
-Keep in mind that if you intend to use this method to calculate a rate relative
-to height in meters, you will need very precise altitude calculations for good
-results. As the dry adiabatic rate is a constant that does not depend on the
-temperature or the pressure, most of the time you will be better off simply
-using the `gamma` constant.
+Keep in mind that if you intend to use this method to calculate a rate
+relative to height in meters, you will need very precise altitude
+calculations for good results. As the dry adiabatic rate is a constant
+that does not depend on the temperature or the pressure, most of the time
+you will be better off simply using the `gamma` constant.
 
 <https://en.wikipedia.org/wiki/Ideal_gas_law> contains a very good
 introduction to this subject.
@@ -608,4 +642,4 @@ const gamma = (15 - velitherm.adiabaticCooling(15,
 assert(Math.abs(gamma - velitherm.gamma) < 1e-5)
 ```
 
-Returns **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** 
+Returns **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)**&#x20;
