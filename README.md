@@ -127,7 +127,7 @@ npx tsx examples/risingAir.ts
 
 ## Flight instruments
 
-I know that the surrounding air pressure is 821 hPa. How can I tell at what is my current altitude? How can I tell what is my current flight level and how far I am from FL115?
+I know that the surrounding air pressure is 821 hPa. How can I tell what is my current altitude? How can I tell what is my current flight level and how far I am from FL115?
 
 My local weather information provider tells me that the mean sea level pressure of the day at my location is 1017 hPa. How can I improve the accuracy of my height estimate? And if I know that the temperature at the ground is 23°C? How can I get an even better estimate?
 
