@@ -120,7 +120,7 @@ if (rhoParcel < rhoAir500) {
 
 You can run the example program with
 ```shell
-tsx examples/risingAir.ts
+npx tsx examples/risingAir.ts
 ```
 
 *Note that the dew point of the air parcel at sea level is 20.26°C, yet it does not form a cloud when cooled down to 20.12°C at 500m AMSL. The reason is that a dew point is valid only for a given pressure. At a lower pressure, the dew point will also be lower.*
