@@ -467,7 +467,7 @@ export function adiabaticCooling(
  * @returns {number}
  */
 export function pressureFromFL(FL: number): number {
-  return pressureFromStandardAltitude(FL * 100 / feetPerMeter);
+  return pressureFromStandardAltitude(FL * 100 / feetPerMeter, P0);
 }
 
 /**
@@ -488,5 +488,5 @@ export function pressureFromFL(FL: number): number {
  * @returns {number}
  */
 export function FLFromPressure(P: number): number {
-  return altitudeFromStandardPressure(P) * feetPerMeter / 100;
+  return altitudeFromStandardPressure(P, P0) * feetPerMeter / 100;
 }
