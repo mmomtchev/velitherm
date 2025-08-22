@@ -265,7 +265,8 @@ Copyright © 2022 Momtchil Momtchev <momtchil@momtchev.com>
 
 Licensed under the LGPL License, Version 3.0 (the "License")
 You may not use this file except in compliance with the License.
-You may obtain a copy of the License at: <https://www.gnu.org/licenses/lgpl-3.0.en.html>
+You may obtain a copy of the License at:
+<https://www.gnu.org/licenses/lgpl-3.0.en.html>
 
 All methods use:
 
@@ -401,7 +402,8 @@ It is used when calculating the QFF.
 
 *   `pressure` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** Pressure
 *   `pressure0` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)?** Optional sea-level pressure of the day (optional, default `P0`)
-*   `temp` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)?** Optional average temperature from the ground to the given level (optional, default `T0`)
+*   `temp` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)?** Optional average temperature from the ground
+    to the given level (optional, default `T0`)
 
 Returns **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)**&#x20;
 
@@ -409,8 +411,10 @@ Returns **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/G
 
 Pressure from altitude using the hypsometric formula.
 
-This is a better equation that takes into account the pressure and the temperature of the day.
-It is not a standard and different weather institutions use slightly different parameters.
+This is a better equation that takes into account the pressure and
+the temperature of the day.
+It is not a standard and different weather institutions use slightly
+different parameters.
 It is used when calculating the QFF.
 
 ### Parameters
@@ -426,7 +430,8 @@ Returns **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/G
 
 (Saturation) Water vapor pressure.
 
-Clausius–Clapeyron equation - the most fundamental equation in weather science.
+Clausius–Clapeyron equation - the most fundamental equation in weather
+science.
 
 This is the Magnus-Tetens approximation.
 
@@ -532,9 +537,11 @@ Returns **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/G
 
 Lifted Condensation Level.
 
-This is the altitude at which a mechanically lifted air parcel from the ground will condensate.
+This is the altitude at which a mechanically lifted air parcel from
+the ground will condensate.
 
-It corresponds to the cloud base level when the clouds are formed by mechanical lifting.
+It corresponds to the cloud base level when the clouds are formed by
+mechanical lifting.
 
 This approximation is known as the Espy equation with the Stull coefficient.
 
@@ -549,9 +556,11 @@ Returns **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/G
 
 Moist adiabatic lapse rate from pressure and temperature.
 
-Copied from Roland Stull, Practical Meteorology (copylefted, available online).
+Copied from Roland Stull, Practical Meteorology
+(copylefted, available online).
 
-Rather complex approximation based on the Magnus-Tetens equation and the barometric equation.
+Rather complex approximation based on the Magnus-Tetens equation and
+the barometric equation.
 
 ### Parameters
 
@@ -564,13 +573,15 @@ Returns **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/G
 
 Adiabatic expansion rate from pressure change rate.
 
-This equation allows to calculate the expansion ratio of an air parcel from the
-the previous pressure and the new pressure.
+This equation allows to calculate the expansion ratio of an air parcel
+from the the previous pressure and the new pressure.
 
-An adiabatic expansion is an isentropic process that is governed by the Ideal gas law
-in general and the constant entropy relationship in particular:
+An adiabatic expansion is an isentropic process that is governed by
+the Ideal gas law in general and the constant entropy relationship in
+particular:
 (P / P0) = (V / V0) ^ gamma
-Where P=pressure, V=volume, gamma=heat capacity ratio (1.4 for air, a diatomic gas)
+Where P=pressure, V=volume, gamma=heat capacity ratio (1.4 for air,
+a diatomic gas)
 
 Analytic equation.
 
@@ -592,16 +603,18 @@ the previous pressure and the new pressure.
 It is by combining this equation with the barometric equation
 that the adiabatic lapse rate of dry air can be obtained.
 
-An adiabatic expansion is an isentropic process that is governed by the Ideal gas law
-in general and the constant entropy relationship in particular:
+An adiabatic expansion is an isentropic process that is governed by
+the Ideal gas law in general and the constant entropy relationship
+in particular:
 (P / P0) = (V / V0) ^ gamma
-Where P=pressure, V=volume, gamma=heat capacity ratio (1.4 for air, a diatomic gas)
+Where P=pressure, V=volume, gamma=heat capacity ratio (1.4 for air,
+a diatomic gas)
 
-Keep in mind that if you intend to use this method to calculate a rate relative
-to height in meters, you will need very precise altitude calculations for good
-results. As the dry adiabatic rate is a constant that does not depend on the
-temperature or the pressure, most of the time you will be better off simply
-using the `gamma` constant.
+Keep in mind that if you intend to use this method to calculate a rate
+relative to height in meters, you will need very precise altitude
+calculations for good results. As the dry adiabatic rate is a constant
+that does not depend on the temperature or the pressure, most of the time
+you will be better off simply using the `gamma` constant.
 
 <https://en.wikipedia.org/wiki/Ideal_gas_law> contains a very good
 introduction to this subject.
