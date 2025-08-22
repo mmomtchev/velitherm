@@ -72,7 +72,9 @@ There is no single analytical equation that can be used to give a precise value 
 
 If you are coming from an aviation background, and **QNH**, **QFF** and **QFE** are altimeter settings to you, then you should know that they actually refer to different equations for calculating the altitude from the pressure. **QFE** refers to the surface pressure of a given site - airport or weather station - and not an equation. If you want to use `velitherm` to convert between altimeter settings, the right way to do it would be to convert the pressure to altitude using the input setting and then convert it back to pressure using the output setting.
 
-# Example
+# Examples
+
+## General weather science
 
 An air parcel with relative humidify of 75% and temperature of 25°C rises from 0m AMSL to 500m AMSL where the surrounding temperature is 20°C. What is its new relative humidity? What is its new temperature? Has there been condensation and did it form a cloud? Has the convective top (ceiling) been reached or will the air parcel continue to rise? The pressure of the day is 1017hPa and the relative humidity at 500m AMSL is 50%.
 
@@ -118,7 +120,7 @@ if (rhoParcel < rhoAir500) {
 
 You can run the example program with
 ```shell
-ts-node examples/risingAir.ts
+tsx examples/risingAir.ts
 ```
 
 *Note that the dew point of the air parcel at sea level is 20.26°C, yet it does not form a cloud when cooled down to 20.12°C at 500m AMSL. The reason is that a dew point is valid only for a given pressure. At a lower pressure, the dew point will also be lower.*
