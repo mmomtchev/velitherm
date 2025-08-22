@@ -5,3 +5,4 @@ coverage
 .git
 test/test_cc
 test/tewt_c
+codecov.yml
