@@ -54,7 +54,7 @@ import * as velitherm from 'velitherm';
 const alt = velitherm.altitudeFromPressure(898.746);
 ```
 
-## C/C++
+## C++
 
 ```cpp
 #include "node_modules/velitherm/include/velitherm.h"
@@ -62,6 +62,17 @@ const alt = velitherm.altitudeFromPressure(898.746);
 // must be very close to 1000
 double alt = velitherm::altitudeFromPressure(898.746);
 ```
+
+## C
+
+```c
+#include "node_modules/velitherm/include/velitherm.h"
+
+// must be very close to 1000
+double alt = altitudeFromPressure(898.746);
+```
+
+When using plain old C, you should be using C99 (otherwise `gcc` may include a deprecated and non-standard math function called `gamma`) and you should link the math library if it is not already linked.
 
 ## Barometric and hypsometric equations
 
