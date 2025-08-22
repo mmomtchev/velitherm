@@ -69,7 +69,7 @@ double alt = velitherm::altitudeFromPressure(898.746);
 #include "node_modules/velitherm/include/velitherm.h"
 
 // must be very close to 1000
-double alt = altitudeFromPressure(898.746);
+double alt = altitudeFromPressure(898.746, P0, T0);
 ```
 
 When using plain old C, you should be using C99 (otherwise `gcc` may include a deprecated and non-standard math function called `gamma`) and you should link the math library if it is not already linked.
