@@ -171,6 +171,12 @@ console.log('Today FL115 is at', altitudeFL115, 'm');
 console.log('You can climb', altitudeFL115 - alt3, 'm before reaching FL115');
 ```
 
+Run this example with:
+
+```shell
+npx tsx examples/flightInstrument.ts
+```
+
 *Please note the huge difference between the usual 3505m estimate for FL115 and the actual 3945m altitude for this given day!*
 
 # API
