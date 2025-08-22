@@ -4,8 +4,6 @@ const barometerInput = 821;
 const pressureMSL = 1017;
 const temperatureBelow = 23;
 
-const feetPerMeter = 3.28084;
-
 // Rough estimate of the height using only the pressure
 // We round it to 50m because it is a rough estimate
 const alt = Math.round(velitherm.altitudeFromStandardPressure(barometerInput) /
@@ -24,14 +22,13 @@ console.log('Even better estimate of the altitude is', alt3, 'm');
 
 // Flight levels are in pressure-feet, so we do not need
 // anything but the barometer input (this is the very reason for this)
-const fl = Math.round((alt * feetPerMeter) / 100);
+const fl = velitherm.FLFromPressure(barometerInput);
 console.log('The current closest flight level is FL', fl);
 
 // What is the current altitude for FL115?
 // FL115 means 11500 feet measured at pressure at standard atmospheric
 // conditions
-const pressureFL115 = velitherm.pressureFromStandardAltitude(
-  115 * 100 / feetPerMeter);
+const pressureFL115 = velitherm.pressureFromFL(115);
 console.log('FL115 means the altitude at which the pressure is',
   Math.round(pressureFL115), 'hPa');
 

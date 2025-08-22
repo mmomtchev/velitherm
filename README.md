@@ -69,7 +69,7 @@ double alt = velitherm::altitudeFromPressure(898.746);
 #include "node_modules/velitherm/include/velitherm.h"
 
 // must be very close to 1000
-double alt = altitudeFromPressure(898.746);
+double alt = altitudeFromPressure(898.746, P0, T0);
 ```
 
 When using plain old C, you should be using C99 (otherwise `gcc` may include a deprecated and non-standard math function called `gamma`) and you should link the math library if it is not already linked.
@@ -156,8 +156,6 @@ const barometerInput = 821;
 const pressureMSL = 1017;
 const temperatureBelow = 23;
 
-const feetPerMeter = 3.28084;
-
 // Rough estimate of the height using only the pressure
 // We round it to 50m because it is a rough estimate
 const alt = Math.round(velitherm.altitudeFromStandardPressure(barometerInput) /
@@ -176,14 +174,13 @@ console.log('Even better estimate of the altitude is', alt3, 'm');
 
 // Flight levels are in pressure-feet, so we do not need
 // anything but the barometer input (this is the very reason for this)
-const fl = Math.round((alt * feetPerMeter) / 100);
+const fl = velitherm.FLFromPressure(barometerInput);
 console.log('The current closest flight level is FL', fl);
 
 // What is the current altitude for FL115?
 // FL115 means 11500 feet measured at pressure at standard atmospheric
 // conditions
-const pressureFL115 = velitherm.pressureFromStandardAltitude(
-  115 * 100 / feetPerMeter);
+const pressureFL115 = velitherm.pressureFromFL(115);
 console.log('FL115 means the altitude at which the pressure is',
   Math.round(pressureFL115), 'hPa');
 
@@ -234,6 +231,7 @@ npx tsx examples/flightInstrument.ts
 *   [Mv](#mv)
 *   [R](#r)
 *   [K](#k)
+*   [feetPerMeter](#feetpermeter)
 *   [altitudeFromStandardPressure](#altitudefromstandardpressure)
     *   [Parameters](#parameters)
 *   [pressureFromStandardAltitude](#pressurefromstandardaltitude)
@@ -267,6 +265,10 @@ npx tsx examples/flightInstrument.ts
 *   [adiabaticCooling](#adiabaticcooling)
     *   [Parameters](#parameters-15)
     *   [Examples](#examples)
+*   [pressureFromFL](#pressurefromfl)
+    *   [Parameters](#parameters-16)
+*   [FLFromPressure](#flfrompressure)
+    *   [Parameters](#parameters-17)
 
 ## velitherm
 
@@ -364,6 +366,12 @@ Type: [number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Globa
 ## K
 
 Absolute zero in °C
+
+Type: [number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)
+
+## feetPerMeter
+
+Number of feets in one meter
 
 Type: [number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)
 
@@ -652,5 +660,48 @@ const gamma = (15 - velitherm.adiabaticCooling(15,
 // It should be very close to the provided constant
 assert(Math.abs(gamma - velitherm.gamma) < 1e-5)
 ```
+
+Returns **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)**&#x20;
+
+## pressureFromFL
+
+Convert a Flight Level to pressure
+
+Flight levels are defined as pressure and not as a fixed
+altitude. This means that a flight level can always be converted
+to pressure without needing any other information in a fully
+deterministic way.
+
+A flight level of 115 means 11500 feet measured by barometer
+using the ICAO standard atmosphere.
+
+The returned pressure can then be converted to altitude using
+any of the above functions, taking into account the MSL pressure and
+temperature variations.
+
+### Parameters
+
+*   `FL` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** Flight Level
+
+Returns **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)**&#x20;
+
+## FLFromPressure
+
+Convert pressure to Flight Level.
+
+Flight levels are defined as pressure and not as a fixed
+altitude. This means that a flight level can always be converted
+to pressure without needing any other information in a fully
+deterministic way.
+
+A flight level of 115 means 11500 feet measured by barometer
+using the ICAO standard atmosphere.
+
+The returned Flight Level can be a fractional number, this should
+be rounded to the closest integer as there are no fractional flight levels.
+
+### Parameters
+
+*   `P` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** pressure
 
 Returns **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)**&#x20;
