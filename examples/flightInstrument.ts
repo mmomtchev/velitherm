@@ -4,8 +4,6 @@ const barometerInput = 821;
 const pressureMSL = 1017;
 const temperatureBelow = 23;
 
-const feetPerMeter = 3.28084;
-
 // Rough estimate of the height using only the pressure
 // We round it to 50m because it is a rough estimate
 const alt = Math.round(velitherm.altitudeFromStandardPressure(barometerInput) /
