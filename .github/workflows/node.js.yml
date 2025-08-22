@@ -27,6 +27,7 @@ jobs:
     - run: npm ci
     - run: npm run build
     - run: npm test
+    - run: npx tsx examples/risingAir.ts
 
 
   codecov:

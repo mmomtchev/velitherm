@@ -8,7 +8,7 @@
   "scripts": {
     "test": "mocha",
     "test:cpp": "g++ -Iinclude -o test/test_cc test/test.cc && test/test_cc",
-    "build": "tsc -p tsconfig.cjs.json && tsc -p tsconfig.es.json && cat src/index.ts | ts-node src/gen_cpp.ts > include/velitherm.h",
+    "build": "tsc -p tsconfig.cjs.json && tsc -p tsconfig.json && cat src/index.ts | tsx src/gen_cpp.ts > include/velitherm.h",
     "doc": "documentation readme --section=API --parse-extension ts src/index.ts",
     "lint": "eslint src/*.ts test/*.ts",
     "c8": "npx c8 mocha",
@@ -54,7 +54,7 @@
     "eslint-plugin-prefer-arrow": "^1.2.3",
     "globals": "^16.3.0",
     "mocha": "^11.0.1",
-    "ts-node": "^10.9.2",
+    "tsx": "^4.20.4",
     "typescript": "^5.3.3"
   }
 }

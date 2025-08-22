@@ -4,7 +4,12 @@
     "module": "es6",
     "moduleResolution": "node",
     "declaration": true,
-    "sourceMap": true
+    "sourceMap": true,
+    "paths": {
+      "velitherm": [
+        "./src"
+      ]
+    }
   },
   "include": [
     "./src/index.ts"
