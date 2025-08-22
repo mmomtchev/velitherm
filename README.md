@@ -179,7 +179,7 @@ Run this example with:
 npx tsx examples/flightInstrument.ts
 ```
 
-*Please note the huge difference between the usual 3505m estimate for FL115 and the actual 3945m altitude for this given day or the 3237m during bad winter weather!*
+*Please note the huge difference between the usual 3505m estimate for FL115 and the actual 3945m altitude for this given day or the 3237m altitude in bad winter weather!*
 
 # API
 
