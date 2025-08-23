@@ -25,7 +25,6 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     - run: npm ci
-    - run: npm run build
     - run: npm test
     - run: npm run test:cpp
     - run: npm run test:c
@@ -50,7 +49,6 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     - run: npm ci
-    - run: npm run build
     - run: npm run c8
     - run: npm run lcov
     - run: npm run codecov
