@@ -16,7 +16,7 @@
     "lcov": "npx c8 report --reporter=text-lcov > coverage/tests.lcov",
     "codecov": "curl -s https://codecov.io/bash | bash",
     "preversion": "npm run lint && npm run test",
-    "version": "npm run doc && npm run build && git add package.json README.md",
+    "version": "npm run doc && npm run prepare && git add package.json README.md",
     "postversion": "git push && git push --tags"
   },
   "repository": {
