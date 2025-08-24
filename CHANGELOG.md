@@ -1,6 +1,6 @@
 # Changelog
 
-# [2.0.0]
+# [2.0.0] 2025-08-24
  - Add functions for working with flight levels
  - Improve the C compatibility
 
