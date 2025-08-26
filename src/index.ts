@@ -182,8 +182,7 @@ export function pressureFromStandardAltitude(
  */
 export function altitudeFromPressure(
   pressure: number, pressure0: number = P0, temp: number = T0): number {
-  return (Math.pow(pressure0 / pressure, 1.0 / 5.257) - 1) * (temp - K) /
-    0.0065;
+  return 29.3 * (temp - K) * Math.log(pressure0 / pressure);
 }
 
 /**
@@ -203,8 +202,7 @@ export function altitudeFromPressure(
  */
 export function pressureFromAltitude(
   height: number, pressure0: number = P0, temp: number = T0): number {
-  return pressure0 *
-    Math.pow(1.0 - 0.0065 * height / (temp - K + 0.0065 * height), 5.257);
+  return pressure0 / Math.exp(height / (29.3 * (temp - K)));
 }
 
 /**

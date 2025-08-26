@@ -14,11 +14,9 @@ const standardAtmosphere = [
 ];
 
 const realAtmosphere = [
-  { alt: 0, pres: 1000, pres0: 1000, t: 20 },
-  { alt: 1061, pres: 898.746, pres0: 1020, t: 10 },
-  { alt: 1958, pres: 794.952, pres0: 1010, t: 0 },
-  { alt: 3022, pres: 701.085, pres0: 1010, t: 0 },
-  { alt: 4182, pres: 616.402, pres0: 1015, t: 0 }
+  { p0: 1000, p: 995, t: 284.75 + velitherm.K, z: 41.82 },
+  { p0: 995, p: 990, t: 284.25 + velitherm.K, z: 41.96 },
+  { p0: 1000, p: 900, t: 280 + velitherm.K, z: 864.38 }
 ];
 
 const waterVaporSaturationPressure = [
@@ -87,10 +85,10 @@ describe('velitherm', () => {
   describe('Hypsometric equation', () => {
     describe('altitudeFromPressure', () => {
       for (const lvl of realAtmosphere) {
-        it(`(QFF=${lvl.pres0}hPa, T=${lvl.t}°C)` +
-          ` Altitude of ${lvl.pres}hPa should be ${lvl.alt}m`, () => {
+        it(`(QFF=${lvl.p0}hPa, T=${Math.round(lvl.t)}°C)` +
+          ` Altitude of ${lvl.p}hPa should be ${lvl.z}m`, () => {
             assert.closeTo(velitherm.altitudeFromPressure(
-              lvl.pres, lvl.pres0, lvl.t), lvl.alt, 5);
+              lvl.p, lvl.p0, lvl.t), lvl.z, 0.01);
           });
       }
       it(`(QFF=${velitherm.P0}hPa, ` +
@@ -102,12 +100,12 @@ describe('velitherm', () => {
 
     describe('pressureFromAltitude', () => {
       for (const lvl of realAtmosphere) {
-        it(`(QFF=${lvl.pres0}hPa, ` +
-          `T=${lvl.t}°C) Altitude at ${lvl.pres}hPa should be ${lvl.alt}m`,
+        it(`(QFF=${lvl.p0}hPa, ` +
+          `T=${lvl.t}°C) Pressure at ${lvl.z}m should be ${lvl.p}hPa`,
           () => {
             assert.closeTo(
               velitherm.pressureFromAltitude(
-                lvl.alt, lvl.pres0, lvl.t), lvl.pres, 1);
+                lvl.z, lvl.p0, lvl.t), lvl.p, 0.1);
           });
       }
       it(`(QFF=${velitherm.P0}hPa, ` +
