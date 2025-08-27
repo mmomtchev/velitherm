@@ -223,6 +223,7 @@ npx tsx examples/flightInstrument.ts
 *   [Cp](#cp)
 *   [L](#l)
 *   [gamma](#gamma)
+*   [ELR](#elr)
 *   [P0](#p0)
 *   [T0](#t0)
 *   [Rd](#rd)
@@ -318,6 +319,22 @@ Type: [number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Globa
 ## gamma
 
 The adiabatic lapse rate of dry air (°C/m)
+
+This is the rate of cooling of a rising air parcel
+without water vapor condensation.
+
+See gammaMoist() for the condensation case.
+
+Type: [number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)
+
+## ELR
+
+Mean environmental lapse rate of the troposphere (°C/m)
+
+This is the mean rate of cooling of the troposphere when
+the air is calm and stable. It works best over large
+height differences. It is also the lapse rate of the
+standard atmosphere.
 
 Type: [number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)
 
