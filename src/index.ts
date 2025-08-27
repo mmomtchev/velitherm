@@ -51,10 +51,28 @@ export const L = 2.5e6;
 /**
  * The adiabatic lapse rate of dry air (°C/m)
  *
+ * This is the rate of cooling of a rising air parcel
+ * without water vapor condensation.
+ * 
+ * See gammaMoist() for the condensation case.
+ *
  * @const
  * @type {number}
  */
 export const gamma = 0.00976;
+
+/**
+ * Mean environmental lapse rate of the troposphere (°C/m)
+ *
+ * This is the mean rate of cooling of the troposphere when
+ * the air is calm and stable. It works best over large
+ * height differences. It is also the lapse rate of the
+ * standard atmosphere.
+ *
+ * @const
+ * @type {number}
+ */
+export const ELR = 0.0065;
 
 /**
  * The average sea level pressure (hPa)

@@ -2,6 +2,7 @@
 
 ### [2.0.1]
  - Use the equation, coefficients and test tables from *Practical Meteorology, Roland Stull* for a slightly increased accuracy of the hypsometric equation
+ - Add the mean environmental lapse rate of the troposphere constant
 
 # [2.0.0] 2025-08-24
  - Add functions for working with flight levels
