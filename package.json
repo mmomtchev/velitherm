@@ -40,7 +40,7 @@
   "homepage": "https://github.com/mmomtchev/velitherm#readme",
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.1",
-    "@eslint/js": "^9.33.0",
+    "@eslint/js": "^10.0.1",
     "@types/chai": "^5.2.2",
     "@types/mocha": "^10.0.6",
     "@types/node": "^25.0.0",
